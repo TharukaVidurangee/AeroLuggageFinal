@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">AeroLuggage</string>
+    <string name="bottom_line">--------------------------------------------------------------------------------------------------------</string>
+    <string name="Logo">Airlines Logo</string>
+    <string name="id">Staff ID</string>
+    <string name="password">Password</string>
+    <string name="placeholder"> </string>
+    <string name="login">Login</string>
+
+    <string name="history">History</string>
+    <string name="info">App Info</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+
+    <string name="scanBag">Scan Bag tag Here</string>
+    <string name="scanRoom">Scan Room</string>
+    <string name="user">Saman Kumara</string>
+    <string name="flightNo">ST2122</string>
+    <string name="scan_bag_tag">Scan Bag Tag</string>
+
+    <string-array name="room_numbers">
+        <item>Room No 101</item>
+        <item>Room No 102</item>
+        <item>Room No 103</item>
+        <item>Room No 201</item>
+        <item>Room No 202</item>
+        <item>Room No 203</item>
+        <item>Room No 301</item>
+        <item>Room No 302</item>
+        <item>Room No 303</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+</resources>
