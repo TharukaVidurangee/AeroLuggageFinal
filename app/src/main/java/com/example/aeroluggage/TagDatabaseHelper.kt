@@ -19,7 +19,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         private const val COLUMN_ROOM = "room"
         private const val COLUMN_DATE_TIME = "dateTime"
         private const val COLUMN_ISSYNC = "issync"
-//        private const val COLUMN_USER_ID = "userID"
+        private const val COLUMN_USER_ID = "userID"
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -29,8 +29,8 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 $COLUMN_TAG TEXT, 
                 $COLUMN_ROOM TEXT, 
                 $COLUMN_DATE_TIME TEXT, 
-                $COLUMN_ISSYNC INTEGER DEFAULT 0  -- Use INTEGER to represent BOOLEAN
-
+                $COLUMN_ISSYNC INTEGER DEFAULT 0,  -- Use INTEGER to represent BOOLEAN
+                $COLUMN_USER_ID TEXT
             )
         """.trimIndent()
         db?.execSQL(createTableQuery)
@@ -50,7 +50,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             put(COLUMN_ROOM, tag.room)
             put(COLUMN_DATE_TIME, tag.dateTime)
             put(COLUMN_ISSYNC, 0) // Ensure isSync is set to 0 (unsynced)
-//            put(COLUMN_USER_ID, tag.userID)
+            put(COLUMN_USER_ID, "IN1892")
         }
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -131,12 +131,13 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                     val bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG))
                     val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
                     val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME))
-                    //val userId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+                    val userId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
 
                     val storageRoom = StorageRoom(RoomId = room)
                     val syncData = SyncData(
-                        BagTag = bagtag,
                         StorageRoom = storageRoom,
+                        BagTag = bagtag,
+                        AddedUser = userId,
                         AddedDate = dateTime,
                     )
                     syncDataList.add(syncData)

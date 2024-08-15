@@ -1,6 +1,7 @@
 package com.example.aeroluggage
 data class SyncData(
-    val BagTag: String,
     val StorageRoom: StorageRoom,
-    val AddedDate: String,
+    val BagTag: String,
+    val AddedUser: String,
+    val AddedDate: String
 )

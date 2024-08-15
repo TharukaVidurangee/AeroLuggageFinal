@@ -12,3 +12,4 @@ data class RoomDataItem(
     val RoomLabel: String,
     val ValidPeriod: Int
 )
+
