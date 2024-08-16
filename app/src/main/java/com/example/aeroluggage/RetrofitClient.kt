@@ -7,20 +7,6 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-//object RetrofitClient {
-//    private const val BASE_URL = "https://ulmobservicestest.srilankan.com/"
-//
-//    val instance: ApiService by lazy {
-//        val retrofit = Retrofit.Builder()
-//            .baseUrl(BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//
-//        retrofit.create(ApiService::class.java)
-//    }
-//
-//}
-
 object RetrofitClient {
 
     private val retrofit: Retrofit
@@ -60,6 +46,4 @@ object RetrofitClient {
         retrofit.create(ApiService::class.java)
     }
 }
-
-
 

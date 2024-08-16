@@ -62,4 +62,6 @@ dependencies {
     implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation(kotlin("script-runtime"))
 
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
 }

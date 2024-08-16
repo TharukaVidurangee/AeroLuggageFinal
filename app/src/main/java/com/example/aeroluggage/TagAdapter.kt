@@ -158,21 +158,23 @@ class TagAdapter(
         }
     }
 
-    // Trigger sync with the server
     private fun triggerSync(context: Context) {
+        // Fetch unsynced tags from the local database
         val unsyncedTags = db.getUnsyncedTags()
+
+        // Convert the list of unsynced tags to JSON
         val jsonData = JsonUtils.convertToJSON(unsyncedTags)
 
-        // Log the JSON data for verification
+        // Log the JSON data for verification (optional)
         Log.d("SYNC_DATA_JSON", jsonData)
 
-        // Call the API to sync the data
+        // Make the API call to send the data to the server
         val call = RetrofitClient.instance.sendSyncData(unsyncedTags)
         call.enqueue(object : Callback<SyncResponse> {
             override fun onResponse(call: Call<SyncResponse>, response: Response<SyncResponse>) {
                 if (response.isSuccessful) {
                     val syncResponse = response.body()
-                    val message = syncResponse?.message ?: "Sync successful"
+                    val message = syncResponse?.ReturnCode ?: "Sync successful"
                     Log.d("SYNC_DEBUG", "Server message: $message")
 
                     // Mark tags as synced in the local database
@@ -180,7 +182,6 @@ class TagAdapter(
                         db.markAsSynced(tag.BagTag)
                     }
 
-                    // Show a toast with the server's response message
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 } else {
                     Log.e("SYNC_DEBUG", "Failed to sync data: ${response.code()}")
@@ -194,6 +195,7 @@ class TagAdapter(
             }
         })
     }
+
 
     // Refresh the data in the adapter
     fun refreshData(newTags: List<Tag>) {

@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.google.gson.Gson
+import retrofit2.Call
 
 class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
 
@@ -136,10 +137,10 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
 
                     val storageRoom = StorageRoom(RoomId = room)
                     val syncData = SyncData(
-                        StorageRoom = storageRoom,
-                        BagTag = bagtag,
-                        AddedUser = userId,
                         AddedDate = dateTime,
+                        AddedUser = userId,
+                        BagTag = bagtag,
+                        StorageRoom = storageRoom,
                     )
                     syncDataList.add(syncData)
                 }
@@ -150,7 +151,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             cursor?.close()
             db.close()
         }
-
         return syncDataList
     }
 
@@ -214,7 +214,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         }
         db.insert(TABLE_NAME, null, values)
         db.close()
-
     }
 
 }

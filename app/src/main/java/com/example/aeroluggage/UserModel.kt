@@ -1,4 +1,4 @@
-package com.example.aeroluggage // Change to your actual package name
+package com.example.aeroluggage
 
 data class UserModel(
     val StaffNo: String,
