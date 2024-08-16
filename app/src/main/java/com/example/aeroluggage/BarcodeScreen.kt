@@ -29,12 +29,16 @@ class BarcodeScreen : AppCompatActivity() {
     private lateinit var db: TagDatabaseHelper
     private lateinit var tagAdapter: TagAdapter
     private lateinit var apiService: ApiService
+    private var staffId: String? = null
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBarcodeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Retrieve the staff ID from the intent
+        staffId = intent.getStringExtra("STAFF_ID")
 
         // Initialize Retrofit and ApiService with custom OkHttpClient
         val retrofit = Retrofit.Builder()
@@ -54,23 +58,6 @@ class BarcodeScreen : AppCompatActivity() {
         binding.tagRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.tagRecyclerView.adapter = tagAdapter
 
-//        // Handle save button click
-//        binding.saveButton.setOnClickListener {
-//            val bagtag = binding.tagEditText.text.toString()
-//            val room = binding.roomEditText.text.toString()
-//            if (room.isNotEmpty() && bagtag.isNotEmpty()) {
-//                val dateTime = getCurrentDateTime()
-//                val tag = Tag(0, bagtag, room, dateTime, userID = String.toString())
-//                db.insertTag(tag)
-//                tagAdapter.refreshData(db.getAllTags())
-//                binding.tagEditText.text.clear()
-//                binding.roomEditText.text.clear()
-//                Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-
         //save CheckId to the database
         binding.saveButton.setOnClickListener {
             val bagtag = binding.tagEditText.text.toString()
@@ -78,7 +65,7 @@ class BarcodeScreen : AppCompatActivity() {
 
             if (roomId.isNotEmpty() && bagtag.isNotEmpty()) {
                 val dateTime = getCurrentDateTime()
-                val tag = Tag(0, bagtag, roomId, dateTime, userID = String.toString())
+                val tag = Tag(0, bagtag, roomId, dateTime, userID = staffId ?: "")
                 db.insertTag(tag)
                 tagAdapter.refreshData(db.getAllTags())
                 binding.tagEditText.text.clear()
@@ -104,34 +91,6 @@ class BarcodeScreen : AppCompatActivity() {
         // Fetch room data
         fetchRoomData()
     }
-
-//    private fun fetchRoomData() {
-//        apiService.getStorageRoomList().enqueue(object : Callback<List<RoomDataItem>> {
-//            override fun onResponse(
-//                call: Call<List<RoomDataItem>>,
-//                response: Response<List<RoomDataItem>>
-//            ) {
-//                if (response.isSuccessful) {
-//                    val roomData = response.body()
-//                    if (roomData != null) {
-//                        val roomLabels = roomData.map { it.CheckLabel }
-//                        setupAutoCompleteTextView(roomLabels)
-//                    } else {
-//                        Log.e("BarcodeScreen", "Response body is null")
-//                        Toast.makeText(this@BarcodeScreen, "No room labels found", Toast.LENGTH_SHORT).show()
-//                    }
-//                } else {
-//                    Log.e("BarcodeScreen", "Response error: ${response.errorBody()?.string()}")
-//                    Toast.makeText(this@BarcodeScreen, "Error fetching room labels", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<RoomDataItem>>, t: Throwable) {
-//                Log.e("BarcodeScreen", "API call failed: ${t.message}", t)
-//                Toast.makeText(this@BarcodeScreen, "Failed to fetch room labels", Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
 
     //modifying fetchRoomData function to get both CheckId and CheckLabel
     private fun fetchRoomData() {
@@ -177,13 +136,6 @@ class BarcodeScreen : AppCompatActivity() {
             roomEditText.tag = selectedCheckId  // Store the CheckId in the tag property
         }
     }
-
-//    private fun setupAutoCompleteTextView(labels: List<String>) {
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, labels)
-//        val roomEditText = findViewById<AutoCompleteTextView>(R.id.roomEditText)
-//        roomEditText.setAdapter(adapter)
-//        roomEditText.threshold = 1 // Start showing suggestions after 1 character
-//    }
 
     // Get the current date and time as a formatted string
     private fun getCurrentDateTime(): String {

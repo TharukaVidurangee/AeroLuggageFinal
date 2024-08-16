@@ -50,7 +50,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             put(COLUMN_ROOM, tag.room)
             put(COLUMN_DATE_TIME, tag.dateTime)
             put(COLUMN_ISSYNC, 0) // Ensure isSync is set to 0 (unsynced)
-            put(COLUMN_USER_ID, "IN1892")
+            put(COLUMN_USER_ID, tag.userID)
         }
         db.insert(TABLE_NAME, null, values)
         db.close()
@@ -69,6 +69,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             val bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG))
             val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
             val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME))
+            val userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
 
             // Log data
             Log.d("TAG_QUERY_RESULT", "ID: $id")
@@ -77,7 +78,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             Log.d("TAG_QUERY_RESULT", "DateTime: $dateTime")
 
             // When all the data are retrieved, pass them as an argument and store it in a tag variable and add it into the tagsList
-            val tag = Tag(id, bagtag, room, dateTime, userID = String.toString())
+            val tag = Tag(id, bagtag, room, dateTime, userID)
             tagsList.add(tag)
         }
         cursor.close()
@@ -107,7 +108,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
     }
 
-    //to geT unsynced tags
+    //to get unsynced tags
     fun getUnsyncedTags(): List<SyncData> {
         val syncDataList = mutableListOf<SyncData>()
         val db = readableDatabase
@@ -158,23 +159,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         return gson.toJson(syncDataList)
     }
 
-    // to get distinct rooms
-//    fun getDistinctRooms(): List<String> {
-//        val roomsList = mutableListOf<String>()
-//        val db = readableDatabase
-//        val query = "SELECT DISTINCT $COLUMN_ROOM FROM $TABLE_NAME"
-//        val cursor = db.rawQuery(query, null)
-//
-//        while (cursor.moveToNext()) {
-//            val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
-//            roomsList.add(room)
-//        }
-//
-//        cursor.close()
-//        db.close()
-//        return roomsList
-//    }
-
     // Method to get distinct room numbers
     fun getDistinctRooms(): List<String> {
         val db = readableDatabase
@@ -223,23 +207,14 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         return tagsList
     }
 
+    fun saveUserId(userId: String) {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLUMN_USER_ID, userId)
+        }
+        db.insert(TABLE_NAME, null, values)
+        db.close()
 
-//    //to count tags by room number
-//    fun getTagCountByRoom(room: String): Int {
-//        val db = readableDatabase
-//        val query = "SELECT COUNT(*) FROM $TABLE_NAME WHERE $COLUMN_ROOM = ?"
-//        val cursor = db.rawQuery(query, arrayOf(room))
-//
-//        var count = 0
-//        if (cursor.moveToFirst()) {
-//            count = cursor.getInt(0)
-//        }
-//
-//        cursor.close()
-//        db.close()
-//        return count
-//    }
-
-
+    }
 
 }

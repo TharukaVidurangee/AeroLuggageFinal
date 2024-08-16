@@ -15,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class LoginScreen : AppCompatActivity() {
 
     private lateinit var apiService: ApiService
+    private lateinit var databaseHelper: TagDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +24,8 @@ class LoginScreen : AppCompatActivity() {
         val usernameEditText = findViewById<EditText>(R.id.editTextText2)
         val passwordEditText = findViewById<EditText>(R.id.password)
         val loginButton = findViewById<Button>(R.id.loginButton)
+
+        databaseHelper = TagDatabaseHelper(this)
 
         // Initialize Retrofit with UnsafeOkHttpClient
         val httpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient()
@@ -54,7 +57,10 @@ class LoginScreen : AppCompatActivity() {
                     val user = response.body()
                     if (user != null && user.ReturnCode == "success") {
                         // Navigate to BarcodeScreen
+                        //val intent = Intent(this@LoginScreen, BarcodeScreen::class.java)
+                        // Pass the StaffNo to the BarcodeScreen
                         val intent = Intent(this@LoginScreen, BarcodeScreen::class.java)
+                        intent.putExtra("STAFF_ID", user.StaffNo) // Pass StaffNo to the next activity
                         startActivity(intent)
                     } else {
                         Toast.makeText(this@LoginScreen, "Invalid username or password", Toast.LENGTH_SHORT).show()
@@ -68,5 +74,8 @@ class LoginScreen : AppCompatActivity() {
                 Toast.makeText(this@LoginScreen, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+
+        //to save the userId after the successful login
+
     }
 }
