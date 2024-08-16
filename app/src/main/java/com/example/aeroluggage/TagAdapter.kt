@@ -158,43 +158,99 @@ class TagAdapter(
         }
     }
 
+//    private fun triggerSync(context: Context) {
+//        // Fetch unsynced tags from the local database
+//        val unsyncedTags = db.getUnsyncedTags()
+//
+//        // Convert the list of unsynced tags to JSON
+//        val jsonData = JsonUtils.convertToJSON(unsyncedTags)
+//
+//        // Log the JSON data for verification (optional)
+//        Log.d("SYNC_DATA_JSON", jsonData)
+//
+//        // Make the API call to send the data to the server
+//        val call = RetrofitClient.instance.sendSyncData(unsyncedTags)
+//        call.enqueue(object : Callback<SyncResponse> {
+//            override fun onResponse(call: Call<SyncResponse>, response: Response<SyncResponse>) {
+//                if (response.isSuccessful) {
+//                    val syncResponse = response.body()
+//                    val message = syncResponse?.ReturnCode ?: "Sync successful"
+//                    Log.d("SYNC_DEBUG", "Server message: $message")
+//
+//                    // Mark tags as synced in the local database
+//                    unsyncedTags.forEach { tag ->
+//                        db.markAsSynced(tag.BagTag)
+//                    }
+//
+//                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+//                } else {
+//                    Log.e("SYNC_DEBUG", "Failed to sync data: ${response.code()}")
+//                    Toast.makeText(context, "Failed to sync data.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<SyncResponse>, t: Throwable) {
+//                Log.e("SYNC_DEBUG", "Sync failed: ${t.message}")
+//                Toast.makeText(context, "Sync failed: ${t.message}", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
+
     private fun triggerSync(context: Context) {
-        // Fetch unsynced tags from the local database
-        val unsyncedTags = db.getUnsyncedTags()
+        try {
+            // Fetch unsynced tags from the local database
+            val unsyncedTags = db.getUnsyncedTags()
 
-        // Convert the list of unsynced tags to JSON
-        val jsonData = JsonUtils.convertToJSON(unsyncedTags)
+            // Convert the list of unsynced tags to JSON
+            val jsonData = JsonUtils.convertToJSON(unsyncedTags)
 
-        // Log the JSON data for verification (optional)
-        Log.d("SYNC_DATA_JSON", jsonData)
+            // Log the JSON data for verification (optional)
+            Log.d("SYNC_DATA_JSON", jsonData)
 
-        // Make the API call to send the data to the server
-        val call = RetrofitClient.instance.sendSyncData(unsyncedTags)
-        call.enqueue(object : Callback<SyncResponse> {
-            override fun onResponse(call: Call<SyncResponse>, response: Response<SyncResponse>) {
-                if (response.isSuccessful) {
-                    val syncResponse = response.body()
-                    val message = syncResponse?.ReturnCode ?: "Sync successful"
-                    Log.d("SYNC_DEBUG", "Server message: $message")
+            // Make the API call to send the data to the server
+            val call = RetrofitClient.instance.sendSyncData(unsyncedTags)
+            call.enqueue(object : Callback<SyncResponse> {
+                override fun onResponse(call: Call<SyncResponse>, response: Response<SyncResponse>) {
+                    if (response.isSuccessful) {
+                        try {
+                            val syncResponse = response.body()
+                            val message = syncResponse?.ReturnCode ?: "Unknown"
+                            //val message = syncResponse?.message ?: "Sync successful"
 
-                    // Mark tags as synced in the local database
-                    unsyncedTags.forEach { tag ->
-                        db.markAsSynced(tag.BagTag)
+                            if (message == "failure") {
+                                Log.e("SYNC_DEBUG", "Server returned failure: ${syncResponse?.errorMessage ?: "No error message"}")
+                                Toast.makeText(context, "Sync failed: ${syncResponse?.errorMessage ?: "Unknown error"}", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Log.d("SYNC_DEBUG", "Server message: $message")
+
+                                // Mark tags as synced in the local database
+                                unsyncedTags.forEach { tag ->
+                                    db.markAsSynced(tag.BagTag)
+                                }
+
+                                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                            }
+                        } catch (e: Exception) {
+                            Log.e("SYNC_DEBUG", "Error parsing server response: ${e.message}", e)
+                            Toast.makeText(context, "Error parsing server response.", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Log.e("SYNC_DEBUG", "Failed to sync data: ${response.code()}")
+                        Toast.makeText(context, "Failed to sync data: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
-
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-                } else {
-                    Log.e("SYNC_DEBUG", "Failed to sync data: ${response.code()}")
-                    Toast.makeText(context, "Failed to sync data.", Toast.LENGTH_SHORT).show()
                 }
-            }
 
-            override fun onFailure(call: Call<SyncResponse>, t: Throwable) {
-                Log.e("SYNC_DEBUG", "Sync failed: ${t.message}")
-                Toast.makeText(context, "Sync failed: ${t.message}", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<SyncResponse>, t: Throwable) {
+                    Log.e("SYNC_DEBUG", "Sync failed: ${t.message}", t)
+                    Toast.makeText(context, "Sync failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } catch (e: Exception) {
+            Log.e("SYNC_DEBUG", "Unexpected error during sync: ${e.message}", e)
+            Toast.makeText(context, "Unexpected error during sync: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
 
     // Refresh the data in the adapter

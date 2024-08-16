@@ -13,5 +13,6 @@ data class SyncResponse(
     val LastUpdatedDate: String?,
     val EndDate: String?,
     val ValidPeriod: String?,
+    val errorMessage: String?,
     val ReturnCode: String
 )
