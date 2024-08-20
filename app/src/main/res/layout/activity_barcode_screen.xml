@@ -78,12 +78,13 @@
             android:layout_width="52dp"
             android:layout_height="46dp"
             android:layout_marginTop="4dp"
-            android:layout_marginEnd="48dp"
+            android:layout_marginEnd="32dp"
             android:layout_marginBottom="13dp"
             android:src="@drawable/baseline_save_24"
             app:layout_constraintBottom_toTopOf="@+id/view01"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView14"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="MissingConstraints" />
 
         <View
@@ -107,8 +108,7 @@
             android:layout_marginBottom="12dp"
             android:text="Bags In This Room"
             android:textColor="@color/white"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@id/view01"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -124,6 +124,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view01"
             app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/syncAllButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="11dp"
+            android:text="Sync All"
+            app:layout_constraintBottom_toTopOf="@+id/view01"
+            app:layout_constraintEnd_toStartOf="@+id/saveButton"
+            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintTop_toBottomOf="@+id/imageView14"
             tools:ignore="MissingConstraints" />
 
         <Button
