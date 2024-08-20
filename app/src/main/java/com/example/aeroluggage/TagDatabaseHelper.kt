@@ -13,7 +13,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
 
     companion object {
         private const val DATABASE_NAME = "bagtag.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2
         private const val TABLE_NAME = "allbagtags"
         private const val COLUMN_ID = "id"
         private const val COLUMN_TAG = "bagtag"
@@ -37,10 +37,16 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db?.execSQL(createTableQuery)
     }
 
+//    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+//        val dropTableQuery = "DROP TABLE IF EXISTS $TABLE_NAME"
+//        db?.execSQL(dropTableQuery)
+//        onCreate(db)
+//    }
+
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        val dropTableQuery = "DROP TABLE IF EXISTS $TABLE_NAME"
-        db?.execSQL(dropTableQuery)
-        onCreate(db)
+        if (oldVersion < 2) {
+            db?.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN userID TEXT")
+        }
     }
 
     // To add data to the database
@@ -77,6 +83,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             Log.d("TAG_QUERY_RESULT", "BagTag: $bagtag")
             Log.d("TAG_QUERY_RESULT", "Room: $room")
             Log.d("TAG_QUERY_RESULT", "DateTime: $dateTime")
+            Log.d("TAG_QUERY_RESULT", "UserID: $userID")
 
             // When all the data are retrieved, pass them as an argument and store it in a tag variable and add it into the tagsList
             val tag = Tag(id, bagtag, room, dateTime, userID)
@@ -113,6 +120,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     fun getUnsyncedTags(): List<SyncData> {
         val syncDataList = mutableListOf<SyncData>()
         val db = readableDatabase
+        //val query = "SELECT * FROM $TABLE_NAME"
         val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ISSYNC = 0"
         var cursor: Cursor? = null
 

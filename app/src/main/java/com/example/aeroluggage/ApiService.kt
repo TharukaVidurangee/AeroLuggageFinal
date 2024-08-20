@@ -1,7 +1,9 @@
 package com.example.aeroluggage // Change to your actual package name
 
 import RoomDataItem
+import android.content.SyncRequest
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -20,5 +22,6 @@ interface ApiService {
     fun getStorageRoomList(): Call<List<RoomDataItem>>
 
     @POST("Easypass_revamp/StorageRoom/SaveStorageRoomBag")
-    fun sendSyncData(@Body syncDataList: List<SyncData>): Call<SyncResponse>
+    //fun sendSyncData(@Body syncDataList: List<SyncData>): Call<SyncResponse>
+    fun sendSyncData(@Body request: SyncData): Call<SyncResponse>
 }
