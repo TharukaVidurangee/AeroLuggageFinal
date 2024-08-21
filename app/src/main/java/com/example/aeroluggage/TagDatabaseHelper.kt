@@ -37,12 +37,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db?.execSQL(createTableQuery)
     }
 
-//    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-//        val dropTableQuery = "DROP TABLE IF EXISTS $TABLE_NAME"
-//        db?.execSQL(dropTableQuery)
-//        onCreate(db)
-//    }
-
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         if (oldVersion < 2) {
             db?.execSQL("ALTER TABLE $TABLE_NAME ADD COLUMN userID TEXT")
