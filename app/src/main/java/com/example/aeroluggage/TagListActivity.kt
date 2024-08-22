@@ -16,7 +16,7 @@ class TagListActivity : AppCompatActivity() {
 
         // Set the room number in a TextView (assuming you have one in the layout)
         val roomTextView: TextView = findViewById(R.id.roomTextView)
-        roomTextView.text = "Tags in $roomNumber"
+        roomTextView.text = "Tags in Room $roomNumber"
 
         // Use the room number to load tags from the database
         val tagDatabaseHelper = TagDatabaseHelper(this)

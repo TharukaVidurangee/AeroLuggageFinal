@@ -59,6 +59,16 @@ class TagAdapter(
         }
     }
 
+    //method to remove a synced tag
+//    private fun removeTag(tag: Tag) {
+//        val position = tags.indexOf(tag)
+//        if (position != -1) {
+//            tags.removeAt(position)
+//            notifyItemRemoved(position)  // Notify RecyclerView that the item was removed
+//        }
+//    }
+
+
     private fun syncTag(tag: Tag) {
         // Create a SyncManager instance and trigger sync for the specific tag
         val syncData = SyncData(

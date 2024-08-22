@@ -60,6 +60,8 @@
                 android:layout_marginLeft="10dp"
                 android:text="room no"
                 android:textSize="16dp" />
+
+
         </LinearLayout>
 
         <ImageView
