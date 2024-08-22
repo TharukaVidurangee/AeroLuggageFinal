@@ -54,6 +54,11 @@ class BarcodeScreen : AppCompatActivity() {
         tagAdapter = TagAdapter(db.getAllTags(), this)
       //  tagAdapter = TagAdapter(db.getTagByIDTest(10), this)
 
+        //handle Sync All button click
+        binding.syncAllButton.setOnClickListener {
+            tagAdapter.syncAllTags()
+        }
+
         // Set up RecyclerView
         binding.tagRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.tagRecyclerView.adapter = tagAdapter

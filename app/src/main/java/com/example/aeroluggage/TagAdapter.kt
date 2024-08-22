@@ -56,18 +56,9 @@ class TagAdapter(
         // Handle sync button click
         holder.syncButton.setOnClickListener {
             syncTag(tag) // Sync the specific tag
+            Toast.makeText(holder.itemView.context, "Tag synced", Toast.LENGTH_SHORT).show()
         }
     }
-
-    //method to remove a synced tag
-//    private fun removeTag(tag: Tag) {
-//        val position = tags.indexOf(tag)
-//        if (position != -1) {
-//            tags.removeAt(position)
-//            notifyItemRemoved(position)  // Notify RecyclerView that the item was removed
-//        }
-//    }
-
 
     private fun syncTag(tag: Tag) {
         // Create a SyncManager instance and trigger sync for the specific tag
@@ -91,6 +82,13 @@ class TagAdapter(
                 // Handle failure if needed
             }
         })
+    }
+
+    fun syncAllTags() {
+        val tagsToSync = tags.toList() // Make a copy of the current list
+        for (tag in tagsToSync) {
+            syncTag(tag)
+        }
     }
 
     private fun removeTagFromList(tag: Tag) {
