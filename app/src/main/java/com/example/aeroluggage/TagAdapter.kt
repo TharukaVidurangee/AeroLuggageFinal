@@ -99,7 +99,8 @@ class TagAdapter(
 
     // Refresh the data in the adapter
     fun refreshData(newTags: List<Tag>) {
-        tags = newTags
+        tags = db.getUnsyncedTags()         //Ensure only fetch unsynced tags here
+        //getUnsyncedTags()
         notifyDataSetChanged()
     }
 }

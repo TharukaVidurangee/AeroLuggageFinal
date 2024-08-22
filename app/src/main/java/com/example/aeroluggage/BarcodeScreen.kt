@@ -82,11 +82,10 @@ class BarcodeScreen : AppCompatActivity() {
             }
         }
 
-
         // Find the roomButton in the layout
         val roomButton = findViewById<Button>(R.id.roomButton)
 
-// Set an OnClickListener to navigate to RoomHistoryScreen
+        // Set an OnClickListener to navigate to RoomHistoryScreen
         roomButton.setOnClickListener {
             val intent = Intent(this, RoomHistoryScreen::class.java)
             startActivity(intent)

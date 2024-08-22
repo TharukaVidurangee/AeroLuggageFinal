@@ -61,7 +61,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     fun getAllTags(): List<Tag> {
         val tagsList = mutableListOf<Tag>()
         val db = readableDatabase
-        val query = "SELECT * FROM $TABLE_NAME"
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ISSYNC = 0"
         val cursor = db.rawQuery(query, null)
 
         // Using a while loop to retrieve data
@@ -97,6 +97,14 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
     }
 
+    // Update a tag's sync status
+    fun updateTagSyncStatus(id: Int, isSync: Int): Int {
+        val db = writableDatabase
+        val values = ContentValues()
+        values.put(COLUMN_ISSYNC, isSync)
+        return db.update(TABLE_NAME, values, "$COLUMN_ID=?", arrayOf(id.toString()))
+    }
+
     // Function to mark a tag as synced in the local database
     fun markAsSynced(bagTag: String) {
         val db = writableDatabase
@@ -111,50 +119,76 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     }
 
     //to get unsynced tags
-    fun getUnsyncedTags(): List<SyncData> {
-        val syncDataList = mutableListOf<SyncData>()
-        val db = readableDatabase
-        //val query = "SELECT * FROM $TABLE_NAME"
-        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ISSYNC = 0"
-        var cursor: Cursor? = null
+//    fun getUnsyncedTags(): List<SyncData> {
+//        val syncDataList = mutableListOf<SyncData>()
+//        val db = readableDatabase
+//        //val query = "SELECT * FROM $TABLE_NAME"
+//        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ISSYNC = 0"
+//        var cursor: Cursor? = null
+//
+//        try {
+//            cursor = db.rawQuery(query, null)
+//
+//            if (cursor == null) {
+//                Log.d("DB_DEBUG", "Cursor is null. Query might have failed.")
+//                return syncDataList
+//            }
+//
+//            Log.d("DB_DEBUG", "Cursor count: ${cursor.count}")
+//
+//            if (cursor.count == 0) {
+//                Log.d("DB_DEBUG", "No unsynced tags found.")
+//            } else {
+//                while (cursor.moveToNext()) {
+//                    val bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG))
+//                    val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
+//                    val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME))
+//                    val userId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+//
+//                    val storageRoom = StorageRoom(RoomId = room)
+//                    val syncData = SyncData(
+//                        AddedDate = dateTime,
+//                        AddedUser = userId,
+//                        BagTag = bagtag,
+//                        StorageRoom = storageRoom,
+//                    )
+//                    syncDataList.add(syncData)
+//                }
+//            }
+//        } catch (e: Exception) {
+//            Log.e("DB_ERROR", "Error retrieving unsynced tags: ${e.message}", e)
+//        } finally {
+//            cursor?.close()
+//            db.close()
+//        }
+//        return syncDataList
+//    }
 
-        try {
-            cursor = db.rawQuery(query, null)
+    fun getUnsyncedTags(): List<Tag> {
+        val tagsList = mutableListOf<Tag>()
+        val db = this.readableDatabase
+        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ISSYNC = 0" // Fetch only unsynced tags
+        val cursor = db.rawQuery(query, null)
 
-            if (cursor == null) {
-                Log.d("DB_DEBUG", "Cursor is null. Query might have failed.")
-                return syncDataList
-            }
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+                val bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG))
+                val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
+                val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME))
+                val userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
 
-            Log.d("DB_DEBUG", "Cursor count: ${cursor.count}")
-
-            if (cursor.count == 0) {
-                Log.d("DB_DEBUG", "No unsynced tags found.")
-            } else {
-                while (cursor.moveToNext()) {
-                    val bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG))
-                    val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
-                    val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME))
-                    val userId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
-
-                    val storageRoom = StorageRoom(RoomId = room)
-                    val syncData = SyncData(
-                        AddedDate = dateTime,
-                        AddedUser = userId,
-                        BagTag = bagtag,
-                        StorageRoom = storageRoom,
-                    )
-                    syncDataList.add(syncData)
-                }
-            }
-        } catch (e: Exception) {
-            Log.e("DB_ERROR", "Error retrieving unsynced tags: ${e.message}", e)
-        } finally {
-            cursor?.close()
-            db.close()
+                val tag = Tag(id, bagtag, room, dateTime, userID)
+                tagsList.add(tag)
+            } while (cursor.moveToNext())
         }
-        return syncDataList
+
+        cursor.close()
+        db.close()
+
+        return tagsList
     }
+
 
     fun convertToJSON(syncDataList: List<SyncData>): String {
         val gson = Gson()
