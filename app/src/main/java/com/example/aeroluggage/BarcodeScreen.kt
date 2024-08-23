@@ -9,9 +9,13 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aeroluggage.databinding.ActivityBarcodeScreenBinding
+import com.google.android.material.navigation.NavigationView
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
@@ -30,12 +34,43 @@ class BarcodeScreen : AppCompatActivity() {
     private lateinit var tagAdapter: TagAdapter
     private lateinit var apiService: ApiService
     private var staffId: String? = null
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toggle: ActionBarDrawerToggle
+
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBarcodeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize the toolbar and drawer
+        drawerLayout = findViewById(R.id.drawer_layout)
+        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+
+        toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        val navigationView: NavigationView = findViewById(R.id.nav_view)
+        //navigationView.setNavigationItemSelectedListener(this)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_history -> {
+                    // Navigate to RoomHistory activity when the History option is clicked
+                    val intent = Intent(this, RoomHistoryScreen::class.java)
+                    startActivity(intent)
+                }
+
+                R.id.nav_settings -> supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, SettingsFragment()).commit()
+
+                R.id.logout -> Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+            }
+            drawerLayout.closeDrawer(GravityCompat.START)
+            return@setNavigationItemSelectedListener true
+        }
 
         // Retrieve the staff ID from the intent
         staffId = intent.getStringExtra("STAFF_ID")
@@ -83,13 +118,13 @@ class BarcodeScreen : AppCompatActivity() {
         }
 
         // Find the roomButton in the layout
-        val roomButton = findViewById<Button>(R.id.roomButton)
+        //val roomButton = findViewById<Button>(R.id.roomButton)
 
         // Set an OnClickListener to navigate to RoomHistoryScreen
-        roomButton.setOnClickListener {
-            val intent = Intent(this, RoomHistoryScreen::class.java)
-            startActivity(intent)
-        }
+//        roomButton.setOnClickListener {
+//            val intent = Intent(this, RoomHistoryScreen::class.java)
+//            startActivity(intent)
+//        }
 
 
         // Fetch room data
@@ -179,3 +214,25 @@ class BarcodeScreen : AppCompatActivity() {
         }
     }
 }
+
+//private fun NavigationView.setNavigationItemSelectedListener(barcodeScreen: BarcodeScreen) {
+//
+//}
+
+//override fun onNavigationItemSelected(item: MenuItem): Boolean {
+//    when (item.itemId) {
+//        R.id.nav_home -> Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show()
+//        R.id.nav_profile -> Toast.makeText(this, "Profile selected", Toast.LENGTH_SHORT).show()
+//        // Handle other menu items...
+//    }
+//    drawerLayout.closeDrawer(GravityCompat.START)
+//    return true
+//}
+//
+//override fun onBackPressed() {
+//    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//        drawerLayout.closeDrawer(GravityCompat.START)
+//    } else {
+//        super.onBackPressed()
+//    }
+//}

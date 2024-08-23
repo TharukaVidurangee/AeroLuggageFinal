@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn = "navigation_view"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <group>
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/home"
             android:icon="@drawable/sd_home"
@@ -23,11 +26,15 @@
     </group>
 
     <group>
-
         <item
-            android:id="@+id/logout"
-            android:icon="@drawable/sd_logout_temp"
-            android:title="@string/logout" />
+            android:title="">
 
+            <menu>
+                <item
+                    android:id="@+id/logout"
+                    android:icon="@drawable/sd_logout_temp"
+                    android:title="@string/logout" />
+            </menu>
+        </item>
     </group>
 </menu>

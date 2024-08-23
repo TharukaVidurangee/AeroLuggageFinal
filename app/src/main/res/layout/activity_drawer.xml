@@ -59,14 +59,11 @@
 
                 <include layout="@layout/activity_barcode_screen" />
 
-
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
                 </FrameLayout>
             </LinearLayout>
-
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"
@@ -79,6 +76,4 @@
                 app:menu="@menu/side_drawer" />
         </androidx.drawerlayout.widget.DrawerLayout>
     </FrameLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
