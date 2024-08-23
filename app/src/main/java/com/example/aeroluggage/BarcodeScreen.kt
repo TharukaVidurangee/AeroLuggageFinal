@@ -66,7 +66,18 @@ class BarcodeScreen : AppCompatActivity() {
                 R.id.nav_settings -> supportFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container, SettingsFragment()).commit()
 
-                R.id.logout -> Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                R.id.logout ->  {
+                    // Clear session data if needed (like shared preferences or cached data)
+
+                    // Redirect to LoginScreen
+                    val intent = Intent(this, LoginScreen::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                    finish() // Ensure the BarcodeScreen activity is closed
+                }
+
+
+                    //Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
@@ -215,24 +226,3 @@ class BarcodeScreen : AppCompatActivity() {
     }
 }
 
-//private fun NavigationView.setNavigationItemSelectedListener(barcodeScreen: BarcodeScreen) {
-//
-//}
-
-//override fun onNavigationItemSelected(item: MenuItem): Boolean {
-//    when (item.itemId) {
-//        R.id.nav_home -> Toast.makeText(this, "Home selected", Toast.LENGTH_SHORT).show()
-//        R.id.nav_profile -> Toast.makeText(this, "Profile selected", Toast.LENGTH_SHORT).show()
-//        // Handle other menu items...
-//    }
-//    drawerLayout.closeDrawer(GravityCompat.START)
-//    return true
-//}
-//
-//override fun onBackPressed() {
-//    if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//        drawerLayout.closeDrawer(GravityCompat.START)
-//    } else {
-//        super.onBackPressed()
-//    }
-//}

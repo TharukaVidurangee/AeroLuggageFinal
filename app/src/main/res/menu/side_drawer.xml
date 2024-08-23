@@ -7,10 +7,6 @@
     <group
         android:checkableBehavior="single">
         <item
-            android:id="@+id/home"
-            android:icon="@drawable/sd_home"
-            android:title="@string/home"/>
-        <item
             android:id="@+id/nav_history"
             android:icon="@drawable/sd_history"
             android:title="@string/history" />
@@ -22,13 +18,11 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/sd_settings"
             android:title="@string/settings" />
-
     </group>
 
     <group>
         <item
             android:title="">
-
             <menu>
                 <item
                     android:id="@+id/logout"

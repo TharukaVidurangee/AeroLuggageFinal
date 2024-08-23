@@ -74,8 +74,5 @@ class LoginScreen : AppCompatActivity() {
                 Toast.makeText(this@LoginScreen, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-
-        //to save the userId after the successful login
-
     }
 }
