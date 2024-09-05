@@ -22,7 +22,7 @@ app:cardCornerRadius="8dp">
         android:id="@+id/iconImageView1"
         android:layout_width="50dp"
         android:layout_height="match_parent"
-        android:src="@drawable/room" />
+        android:src="@drawable/baseline_meeting_room_24" />
 
     <LinearLayout
         android:layout_width="240dp"

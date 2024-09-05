@@ -25,7 +25,7 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:scaleType="fitXY"
-            android:src="@drawable/bag_done_synced" />
+            android:src="@drawable/baseline_luggage_24" />
 
         <LinearLayout
             android:layout_width="150dp"

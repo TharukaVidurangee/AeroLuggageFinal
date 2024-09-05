@@ -43,7 +43,7 @@ class TagAdapter(
     override fun onBindViewHolder(holder: TagViewHolder, position: Int) {
         val tag = tags[position]
         holder.tagTextView.text = tag.bagtag
-        holder.roomTextView.text = tag.room
+        holder.roomTextView.text = "Room ${tag.room}"
         holder.dateTimeTextView.text = tag.dateTime
 
         // Handle delete button click

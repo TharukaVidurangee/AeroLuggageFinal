@@ -35,7 +35,7 @@ class RoomAdapter : ListAdapter<Room, RoomAdapter.RoomViewHolder>(RoomDiffCallba
 
         // Bind function to set data to the views
         fun bind(room: Room) {
-            roomTextView.text = room.roomNumber
+            roomTextView.text = "Room ${room.roomNumber}"
             tagCountTextView.text = "Tag Count: ${room.tagCount}"
 
             itemView.setOnClickListener {
