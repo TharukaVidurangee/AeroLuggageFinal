@@ -10,8 +10,6 @@
     tools:context=".RoomHistoryScreen"
     android:padding="16dp">
 
-<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
-
     <!--    to display the room number-->
     <TextView
         android:id="@+id/roomTextView"

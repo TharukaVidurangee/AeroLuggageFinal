@@ -61,6 +61,7 @@ class LoginScreen : AppCompatActivity() {
                         // Pass the StaffNo to the BarcodeScreen
                         val intent = Intent(this@LoginScreen, BarcodeScreen::class.java)
                         intent.putExtra("STAFF_ID", user.StaffNo) // Pass StaffNo to the next activity
+                        intent.putExtra("STAFF_NAME", user.StaffName)  // Pass StaffName
                         startActivity(intent)
                     } else {
                         Toast.makeText(this@LoginScreen, "Invalid username or password", Toast.LENGTH_SHORT).show()

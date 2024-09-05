@@ -77,7 +77,7 @@ class BarcodeScreen : AppCompatActivity() {
                 }
 
 
-                //Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show()
             }
             drawerLayout.closeDrawer(GravityCompat.START)
             return@setNavigationItemSelectedListener true
@@ -98,7 +98,7 @@ class BarcodeScreen : AppCompatActivity() {
         // Initialize database and adapter
         db = TagDatabaseHelper(this)
         tagAdapter = TagAdapter(db.getAllTags(), this)
-        //  tagAdapter = TagAdapter(db.getTagByIDTest(10), this)
+      //  tagAdapter = TagAdapter(db.getTagByIDTest(10), this)
 
         //handle Sync All button click
         binding.syncAllButton.setOnClickListener {
