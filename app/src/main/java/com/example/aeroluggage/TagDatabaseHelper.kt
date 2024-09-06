@@ -27,7 +27,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         val createTableQuery = """
             CREATE TABLE $TABLE_NAME (
                 $COLUMN_ID INTEGER PRIMARY KEY, 
-                $COLUMN_TAG TEXT, 
+                $COLUMN_TAG TEXT UNIQUE, 
                 $COLUMN_ROOM TEXT, 
                 $COLUMN_DATE_TIME TEXT, 
                 $COLUMN_ISSYNC INTEGER DEFAULT 0,  -- Use INTEGER to represent BOOLEAN
@@ -46,6 +46,19 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     // To add data to the database
     fun insertTag(tag: Tag) {
         val db = writableDatabase
+
+        // Step 1: Check if the tag already exists
+        val existingTagCursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TAG = ?", arrayOf(tag.bagtag))
+
+        if (existingTagCursor.moveToFirst()) {
+            // Step 2: If it exists, delete the old record
+            val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
+            db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+        }
+
+        existingTagCursor.close()
+
+        // Step 3: Insert the new record
         val values = ContentValues().apply {
             put(COLUMN_TAG, tag.bagtag)
             put(COLUMN_ROOM, tag.room)
@@ -53,8 +66,20 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             put(COLUMN_ISSYNC, 0) // Ensure isSync is set to 0 (unsynced)
             put(COLUMN_USER_ID, tag.userID)
         }
+
         db.insert(TABLE_NAME, null, values)
         db.close()
+
+
+//        val values = ContentValues().apply {
+//            put(COLUMN_TAG, tag.bagtag)
+//            put(COLUMN_ROOM, tag.room)
+//            put(COLUMN_DATE_TIME, tag.dateTime)
+//            put(COLUMN_ISSYNC, 0) // Ensure isSync is set to 0 (unsynced)
+//            put(COLUMN_USER_ID, tag.userID)
+//        }
+//        db.insert(TABLE_NAME, null, values)
+//        db.close()
     }
 
     // To read data from the database
@@ -96,16 +121,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.delete(TABLE_NAME, whereClause, whereArgs)
         db.close()
     }
-
-//    fun deleteTag(tag: String): Boolean {
-//        val db = this.writableDatabase
-//        val whereClause = "$COLUMN_TAG = ?"
-//        val whereArgs = arrayOf(tag)
-//        val rowsDeleted = db.delete(TABLE_NAME, whereClause, whereArgs)
-//        db.close()
-//        return rowsDeleted > 0
-//    }
-
 
     // Update a tag's sync status
     fun updateTagSyncStatus(id: Int, isSync: Int): Int {
