@@ -7,7 +7,7 @@
     android:background="@drawable/backgroundpic"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RoomHistoryScreen"
+    tools:context=".ui.screens.RoomHistoryScreen"
     android:padding="16dp">
 
     <!--    to display the room number-->
