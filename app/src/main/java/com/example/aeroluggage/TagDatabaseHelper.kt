@@ -97,6 +97,16 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
     }
 
+//    fun deleteTag(tag: String): Boolean {
+//        val db = this.writableDatabase
+//        val whereClause = "$COLUMN_TAG = ?"
+//        val whereArgs = arrayOf(tag)
+//        val rowsDeleted = db.delete(TABLE_NAME, whereClause, whereArgs)
+//        db.close()
+//        return rowsDeleted > 0
+//    }
+
+
     // Update a tag's sync status
     fun updateTagSyncStatus(id: Int, isSync: Int): Int {
         val db = writableDatabase
@@ -191,7 +201,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             val tag = Tag(id, bagtag, room, dateTime, userID = "")
             tagsList.add(tag)
         }
-
         cursor.close()
         db.close()
         return tagsList
