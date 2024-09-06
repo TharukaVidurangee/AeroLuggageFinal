@@ -57,8 +57,6 @@ class LoginScreen : AppCompatActivity() {
                     val user = response.body()
                     if (user != null && user.ReturnCode == "success") {
                         // Navigate to BarcodeScreen
-                        //val intent = Intent(this@LoginScreen, BarcodeScreen::class.java)
-                        // Pass the StaffNo to the BarcodeScreen
                         val intent = Intent(this@LoginScreen, BarcodeScreen::class.java)
                         intent.putExtra("STAFF_ID", user.StaffNo) // Pass StaffNo to the next activity
                         intent.putExtra("STAFF_NAME", user.StaffName)  // Pass StaffName

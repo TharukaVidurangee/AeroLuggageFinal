@@ -8,9 +8,11 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -34,9 +36,9 @@ class BarcodeScreen : AppCompatActivity() {
     private lateinit var tagAdapter: TagAdapter
     private lateinit var apiService: ApiService
     private var staffId: String? = null
+//    private var staffName: String? = null
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
-
 
     @SuppressLint("WrongViewCast")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,15 +48,29 @@ class BarcodeScreen : AppCompatActivity() {
 
         // Initialize the toolbar and drawer
         drawerLayout = findViewById(R.id.drawer_layout)
-        val toolbar: androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar)
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_nav, R.string.close_nav)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        // Retrieve Staff ID and Name from Intent
+        staffId = intent.getStringExtra("STAFF_ID")
+        val staffName = intent.getStringExtra("STAFF_NAME")
+
         val navigationView: NavigationView = findViewById(R.id.nav_view)
         //navigationView.setNavigationItemSelectedListener(this)
+        val headerView = navigationView.getHeaderView(0) // Index 0 for the first header view
+
+// Find the TextViews in the header
+        val nameTextView = headerView.findViewById<TextView>(R.id.name)
+        val staffIdTextView = headerView.findViewById<TextView>(R.id.staff_id)
+
+// Set the staffName and staffId
+        nameTextView.text = staffName
+        staffIdTextView.text = staffId
+
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_history -> {
@@ -83,8 +99,6 @@ class BarcodeScreen : AppCompatActivity() {
             return@setNavigationItemSelectedListener true
         }
 
-        // Retrieve the staff ID from the intent
-        staffId = intent.getStringExtra("STAFF_ID")
 
         // Initialize Retrofit and ApiService with custom OkHttpClient
         val retrofit = Retrofit.Builder()
@@ -127,16 +141,6 @@ class BarcodeScreen : AppCompatActivity() {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
         }
-
-        // Find the roomButton in the layout
-        //val roomButton = findViewById<Button>(R.id.roomButton)
-
-        // Set an OnClickListener to navigate to RoomHistoryScreen
-//        roomButton.setOnClickListener {
-//            val intent = Intent(this, RoomHistoryScreen::class.java)
-//            startActivity(intent)
-//        }
-
 
         // Fetch room data
         fetchRoomData()

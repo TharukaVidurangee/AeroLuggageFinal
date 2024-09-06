@@ -43,22 +43,22 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         }
     }
 
-    // To add data to the database
+    // To add data tags to the database
     fun insertTag(tag: Tag) {
         val db = writableDatabase
 
-        // Step 1: Check if the tag already exists
+        //Check if the tag already exists
         val existingTagCursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_TAG = ?", arrayOf(tag.bagtag))
 
         if (existingTagCursor.moveToFirst()) {
-            // Step 2: If it exists, delete the old record
+            //If the tag already exists, then delete the previous record
             val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
             db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
         }
 
         existingTagCursor.close()
 
-        // Step 3: Insert the new record
+        //To insert the new record
         val values = ContentValues().apply {
             put(COLUMN_TAG, tag.bagtag)
             put(COLUMN_ROOM, tag.room)
@@ -70,7 +70,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.insert(TABLE_NAME, null, values)
         db.close()
 
-
 //        val values = ContentValues().apply {
 //            put(COLUMN_TAG, tag.bagtag)
 //            put(COLUMN_ROOM, tag.room)
@@ -80,6 +79,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
 //        }
 //        db.insert(TABLE_NAME, null, values)
 //        db.close()
+
     }
 
     // To read data from the database
