@@ -18,7 +18,7 @@
         <!-- Toolbar for Navigation Drawer -->
         <include layout="@layout/toolbar" />
 
-        <!-- Fragment container if needed -->
+        <!-- Fragment container -->
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Existing BarcodeScreen content -->
+            <!-- BarcodeScreen content -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -162,8 +162,8 @@
                     android:id="@+id/tagRecyclerView"
                     android:layout_width="347dp"
                     android:layout_height="333dp"
-                    android:layout_marginTop="16dp"
-                    android:padding="16dp"
+                    android:layout_marginTop="4dp"
+                    android:padding="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
