@@ -736,5 +736,3 @@ class BarcodeScreen : AppCompatActivity() {
         }
     }
 }
-
-

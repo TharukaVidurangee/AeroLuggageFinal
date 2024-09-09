@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/backgroundpic"
-    android:padding="16dp">
+    android:padding="12dp">
 
 <!--    to display the room number-->
     <TextView
@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/roomTextView"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:background="@android:color/darker_gray"/>
 
 <!--    to add a recyclerView to display all the bagtags-->
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/divider"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="2dp"/>
 
 </RelativeLayout>
 
