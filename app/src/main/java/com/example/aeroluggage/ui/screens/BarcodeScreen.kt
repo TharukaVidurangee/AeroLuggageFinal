@@ -147,7 +147,9 @@ class BarcodeScreen : AppCompatActivity() {
 
         // Handle Change Room Button Click
         binding.changeRoomButton.setOnClickListener {
+            val newRoom = binding.roomEditText.text.toString()
             unfreezeRoomNumber()
+            refreshTagsForRoom(newRoom)  // Refresh the RecyclerView for the new room with today's tags
         }
 
         // Fetch room data
@@ -221,6 +223,27 @@ class BarcodeScreen : AppCompatActivity() {
     private fun getCurrentDateTime(): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         return dateFormat.format(Date())
+    }
+
+    // Method to get the current date in "yyyy-MM-dd" format
+    private fun getCurrentDate(): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(Date())
+    }
+
+    // Method to filter tags by today's date
+    private fun filterTagsByDate(tags: List<Tag>): List<Tag> {
+        val currentDate = getCurrentDate()
+        return tags.filter { tag ->
+            tag.dateTime.startsWith(currentDate)  // Assuming dateTime is in "yyyy-MM-dd HH:mm:ss" format
+        }
+    }
+
+    // Method to refresh the tags for a specific room
+    private fun refreshTagsForRoom(room: String) {
+        val allTagsForRoom = db.getTagsForRoom(room)  // Get all tags for the given room
+        val filteredTags = filterTagsByDate(allTagsForRoom)  // Filter the tags by today's date
+        tagAdapter.refreshData(filteredTags)  // Refresh the RecyclerView with the filtered tags
     }
 
     private fun getUnsafeOkHttpClient(): OkHttpClient {
