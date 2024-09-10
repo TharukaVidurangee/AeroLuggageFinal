@@ -97,6 +97,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                     room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM)),
                     dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
                     userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+
                 )
                 tagsList.add(tag)
             }
@@ -191,13 +192,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(tagId.toString()))
         db.close()
     }
-
-//    // Delete a tag by its bag tag
-//    fun deleteTagByBagtag(bagtag: String) {
-//        val db = writableDatabase
-//        db.delete(TABLE_NAME, "$COLUMN_TAG = ?", arrayOf(bagtag))
-//        db.close()
-//    }
 
     fun getTagsForRoom(roomId: String): List<Tag> {
         val tags = mutableListOf<Tag>()
