@@ -47,15 +47,6 @@ class TagAdapter(
         holder.roomTextView.text = "Room ${tag.room}"
         holder.dateTimeTextView.text = tag.dateTime
 
-        // Set delete button state based on sync status
-        if (tag.isSynced) {
-            holder.deleteButton.isEnabled = false
-            holder.deleteButton.alpha = 0.5f // Reduce opacity to indicate disabled state
-        } else {
-            holder.deleteButton.isEnabled = true
-            holder.deleteButton.alpha = 1.0f
-        }
-
         // Handle delete button click
         holder.deleteButton.setOnClickListener {
             db.deleteTag(tag.id)
