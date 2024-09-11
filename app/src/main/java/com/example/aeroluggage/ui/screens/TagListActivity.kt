@@ -1,15 +1,28 @@
 package com.example.aeroluggage.ui.screens
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aeroluggage.R
 import com.example.aeroluggage.data.database.TagAdapter
 import com.example.aeroluggage.data.database.TagDatabaseHelper
+import com.example.aeroluggage.data.network.ApiService
+import com.example.aeroluggage.data.network.UnsafeOkHttpClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class TagListActivity : AppCompatActivity() {
+
+    private lateinit var apiService: ApiService
+    private lateinit var tagAdapter: TagAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_list)
@@ -33,5 +46,7 @@ class TagListActivity : AppCompatActivity() {
         val tagAdapter = TagAdapter(tags, this)
         tagRecyclerView.adapter = tagAdapter
     }
+
+
 }
 

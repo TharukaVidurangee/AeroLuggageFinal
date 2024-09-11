@@ -47,6 +47,9 @@ class TagAdapter(
         holder.roomTextView.text = "Room ${tag.room}"
         holder.dateTimeTextView.text = tag.dateTime
 
+//        // Enable/Disable the delete button based on the sync status
+//        holder.deleteButton.isEnabled = !tag.isSynced // Disable delete button if the tag is synced
+
         // Handle delete button click
         holder.deleteButton.setOnClickListener {
             db.deleteTag(tag.id)

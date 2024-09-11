@@ -117,9 +117,6 @@ class BarcodeScreen : AppCompatActivity() {
         binding.tagRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.tagRecyclerView.adapter = tagAdapter
 
-        // Fetch user tags if staffId is available
-//        staffId?.let { fetchUserTags(it) }
-
         // Handle Sync All button click
         binding.syncAllButton.setOnClickListener {
             tagAdapter.syncAllTags()

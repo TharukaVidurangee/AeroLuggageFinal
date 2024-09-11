@@ -20,14 +20,10 @@ interface ApiService {
         @Field("StaffPassword") staffPassword: String
     ): Call<UserModel>
 
-    @GET("Easypass_revamp/Home/GetStorageRoomList") // Ensure this is the correct endpoint
+    @GET("Easypass_revamp/Home/GetStorageRoomList")
     fun getStorageRoomList(): Call<List<RoomDataItem>>
 
     @POST("Easypass_revamp/StorageRoom/SaveStorageRoomBag")
     fun sendSyncData(@Body request: SyncData): Call<SyncResponse>
-
-    //to get the tags saved by a specific user
-    @GET("Easypass_revamp/StorageRoom/GetStorageRoomBagListByUser")
-    fun getTagsByUser(@Query("StaffNo") staffNo: String): Call<List<Tag>>
 
 }
