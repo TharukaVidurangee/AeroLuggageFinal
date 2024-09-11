@@ -1,5 +1,6 @@
 package com.example.aeroluggage.data.network // Change to your actual package name
 
+import com.example.aeroluggage.ApiResponse
 import com.example.aeroluggage.data.models.RoomDataItem
 import com.example.aeroluggage.data.models.SyncData
 import com.example.aeroluggage.data.models.Tag
@@ -26,4 +27,6 @@ interface ApiService {
     @POST("Easypass_revamp/StorageRoom/SaveStorageRoomBag")
     fun sendSyncData(@Body request: SyncData): Call<SyncResponse>
 
+    @GET("Easypass_revamp/StorageRoom/GetStorageRoomBagListByUser")
+    fun getTagsByUser(@Query("StaffNo") staffNo: String): Call<ApiResponse>
 }

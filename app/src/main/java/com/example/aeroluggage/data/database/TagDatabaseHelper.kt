@@ -192,6 +192,8 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
     }
 
+
+
     fun getTagsForRoom(roomId: String): List<Tag> {
         val tags = mutableListOf<Tag>()
         val db = this.readableDatabase
