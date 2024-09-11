@@ -99,7 +99,7 @@ class BarcodeScreen : AppCompatActivity() {
             true
         }
 
-        // Initialize Retrofit and ApiService
+        // Initialize Retrofit and ApiService for the
         val retrofit = Retrofit.Builder()
             .baseUrl("https://ulmobservicestest.srilankan.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -116,6 +116,9 @@ class BarcodeScreen : AppCompatActivity() {
         // Set up RecyclerView
         binding.tagRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.tagRecyclerView.adapter = tagAdapter
+
+        // Fetch user tags if staffId is available
+//        staffId?.let { fetchUserTags(it) }
 
         // Handle Sync All button click
         binding.syncAllButton.setOnClickListener {
@@ -267,4 +270,5 @@ class BarcodeScreen : AppCompatActivity() {
             throw RuntimeException(e)
         }
     }
+
 }

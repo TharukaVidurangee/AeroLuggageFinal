@@ -97,7 +97,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                     room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM)),
                     dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
                     userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
-
                 )
                 tagsList.add(tag)
             }

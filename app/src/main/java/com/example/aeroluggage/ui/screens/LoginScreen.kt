@@ -66,6 +66,7 @@ class LoginScreen : AppCompatActivity() {
                         intent.putExtra("STAFF_ID", user.StaffNo) // Pass StaffNo to the next activity
                         intent.putExtra("STAFF_NAME", user.StaffName)  // Pass StaffName
                         startActivity(intent)
+                        finish()
                     } else {
                         Toast.makeText(this@LoginScreen, "Invalid username or password", Toast.LENGTH_SHORT).show()
                     }

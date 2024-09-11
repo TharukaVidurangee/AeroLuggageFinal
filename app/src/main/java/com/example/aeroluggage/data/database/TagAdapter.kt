@@ -74,6 +74,7 @@ class TagAdapter(
         syncManager.syncSingleTag(syncData, object : SyncCallback {
             override fun onSyncSuccess() {
                 Toast.makeText(context, "Tag synced", Toast.LENGTH_SHORT).show()
+                db.markAsSynced(tag.id.toString()) // Mark the tag as synced in the database
                 removeTagFromList(tag) // Remove the synced tag from the list and refresh the RecyclerView
             }
 
@@ -89,6 +90,9 @@ class TagAdapter(
         for (tag in tagsToSync) {
             syncTag(tag)
         }
+
+        // After syncing all tags, refresh the data to show only unsynced tags
+        refreshData(db.getUnsyncedTags())
     }
 
     // Method to remove a synced tag from the list and refresh the data
