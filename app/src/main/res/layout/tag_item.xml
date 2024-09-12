@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="100dp"
     android:layout_margin="4dp">
 
     <!-- Main content of the card -->
@@ -9,7 +9,7 @@
         android:id="@+id/card_view"
         app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         app:cardElevation="2dp"
         app:cardCornerRadius="10dp">
 
@@ -102,8 +102,8 @@
 
             <ImageView
                 android:id="@+id/syncButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/baseline_sync_24"
                 android:padding="8dp"
                 android:scaleType="centerInside" />
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:text="Sync"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:gravity="center" />
 
         </LinearLayout>
@@ -131,8 +131,8 @@
 
             <ImageView
                 android:id="@+id/deleteButton"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:src="@drawable/baseline_delete_24"
                 android:padding="8dp"
                 android:scaleType="centerInside" />
@@ -143,7 +143,7 @@
                 android:layout_height="wrap_content"
                 android:text="Delete"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:gravity="center" />
 
         </LinearLayout>
