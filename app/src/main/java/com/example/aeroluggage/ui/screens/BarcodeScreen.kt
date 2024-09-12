@@ -177,7 +177,9 @@ class BarcodeScreen : AppCompatActivity() {
 
     private fun loadTagsForRoom(roomId: String) {
         val tags = db.getTagsByRoom(roomId)
-        tagAdapter.refreshData(tags)
+        //tagAdapter.refreshData(tags)
+        val sortedTags = tags.sortedByDescending { it.dateTime }
+        tagAdapter.refreshData(sortedTags)
     }
 
     private fun fetchRoomData() {
@@ -242,9 +244,14 @@ class BarcodeScreen : AppCompatActivity() {
 
     // Method to refresh the tags for a specific room
     private fun refreshTagsForRoom(room: String) {
-        val allTagsForRoom = db.getTagsForRoom(room)  // Get all tags for the given room
-        val filteredTags = filterTagsByDate(allTagsForRoom)  // Filter the tags by today's date
-        tagAdapter.refreshData(filteredTags)  // Refresh the RecyclerView with the filtered tags
+//        val allTagsForRoom = db.getTagsForRoom(room)  // Get all tags for the given room
+//        val filteredTags = filterTagsByDate(allTagsForRoom)  // Filter the tags by today's date
+//        tagAdapter.refreshData(filteredTags)  // Refresh the RecyclerView with the filtered tags
+        val tags = db.getTagsByRoom(room)
+        val todayTags = filterTagsByDate(tags)
+        val sortedTags = todayTags.sortedByDescending { it.dateTime }  // Sort tags by dateTime in descending order
+        tagAdapter.refreshData(sortedTags)
+
     }
 
     private fun getUnsafeOkHttpClient(): OkHttpClient {

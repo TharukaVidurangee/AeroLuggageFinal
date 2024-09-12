@@ -1,8 +1,6 @@
-
 package com.example.aeroluggage
 
 import android.content.Context
-import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -19,13 +17,6 @@ import com.example.aeroluggage.data.models.Tag
 import com.example.aeroluggage.domain.storage.StorageRoom
 import com.example.aeroluggage.sync.SyncCallback
 import com.example.aeroluggage.sync.SyncManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 // Adapter class for displaying tags in a RecyclerView
 class TagAdapter(

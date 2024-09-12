@@ -34,6 +34,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingBottom="00dp"
                 android:layout_below="@id/toolbar">
 
                 <!-- Updated Layout for Room and Change Room Button -->
@@ -160,15 +161,16 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tagRecyclerView"
-                    android:layout_width="347dp"
-                    android:layout_height="333dp"
+                    android:layout_width="350dp"
+                    android:layout_height="441dp"
                     android:layout_marginTop="4dp"
-                    android:padding="2dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view01"
                     app:layout_constraintVertical_bias="0.0"
+                    android:paddingBottom="200dp"
+                    android:layout_marginBottom="50dp"
                     tools:ignore="MissingConstraints" />
 
                 <Button
@@ -199,4 +201,3 @@
         app:headerLayout="@layout/header" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
-

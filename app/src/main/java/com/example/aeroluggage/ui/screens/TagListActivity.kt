@@ -40,12 +40,15 @@ class TagListActivity : AppCompatActivity() {
         val tagDatabaseHelper = TagDatabaseHelper(this)
         val tags = tagDatabaseHelper.getTagsByRoom(roomNumber.toString())
 
+        // Sort tags by dateTime in descending order
+        val sortedTags = tags.sortedByDescending { it.dateTime }
+
         // Setup RecyclerView to display tags
         val tagRecyclerView: RecyclerView = findViewById(R.id.tagRecyclerView)
         tagRecyclerView.layoutManager = LinearLayoutManager(this)
 
         //setup the adapter and pass the tags in to it
-        val tagAdapter = TagAdapter(tags, this)
+        val tagAdapter = TagAdapter(sortedTags, this)
         tagRecyclerView.adapter = tagAdapter
     }
 }
