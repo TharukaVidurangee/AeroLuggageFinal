@@ -14,7 +14,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aeroluggage.data.network.ApiService
 import com.example.aeroluggage.R
-import com.example.aeroluggage.data.database.TagAdapter
+import com.example.aeroluggage.TagAdapter
+//import com.example.aeroluggage.data.database.TagAdapter
 import com.example.aeroluggage.data.database.TagDatabaseHelper
 import com.example.aeroluggage.data.models.RoomDataItem
 import com.example.aeroluggage.data.models.Tag

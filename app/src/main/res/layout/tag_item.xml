@@ -1,92 +1,152 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardUseCompatPadding="true"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    app:cardElevation="4dp"
-    android:layout_margin="2dp"
-    app:cardCornerRadius="8dp">
+    android:layout_height="110dp"
+    android:layout_margin="4dp">
 
-    <LinearLayout
-        android:id="@+id/view_foreground"
+    <!-- Main content of the card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="4dp"
-        android:background="@color/white"
-        android:orientation="horizontal"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_vertical"
-            android:layout_margin="8dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/baseline_luggage_24" />
+        android:layout_height="100dp"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:id="@+id/view_foreground"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="4dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="8dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/baseline_luggage_24" />
+
+            <LinearLayout
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/bagtagTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="Bag Tag"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tagTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical|start"
+                    android:text="Tag"
+                    android:textStyle="bold"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/roomTextView"
+                    android:layout_width="137dp"
+                    android:gravity="center_vertical|start"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="room no"
+                    android:textSize="16dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dateTimeTextView"
+            android:layout_width="146dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="bottom|end"
+            android:layout_margin="8dp"
+            android:text="DateTime"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="14sp" />
+    </androidx.cardview.widget.CardView>
 
+    <!-- Buttons that slide in on the right side of the card -->
+    <LinearLayout
+        android:id="@+id/hidden_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="end|center_vertical"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <!-- Sync Button with Background Color -->
+        <LinearLayout
+            android:layout_width="101dp"
+            android:layout_height="87dp"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_sync_background"
+            android:gravity="center"
+            android:translationX="-3dp"
+            android:layout_marginEnd="-8dp">
+
+            <ImageView
+                android:id="@+id/syncButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_sync_24"
+                android:padding="8dp"
+                android:scaleType="centerInside" />
+
+            <!-- Sync Text -->
             <TextView
-                android:id="@+id/bagtagTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical|start"
-                android:text="Bag Tag"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tagTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical|start"
-                android:text="Tag"
-                android:textStyle="bold"
-                android:textSize="20sp" />
-
-            <TextView
-                android:id="@+id/roomTextView"
-                android:layout_width="137dp"
-                android:gravity="center_vertical|start"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="10dp"
-                android:text="room no"
-                android:textSize="16dp" />
-
+                android:text="Sync"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:gravity="center" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/deleteButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/baseline_delete_24" />
+        <!-- Delete Button with Background Color -->
+        <LinearLayout
+            android:layout_width="101dp"
+            android:layout_height="87dp"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_delete_background"
+            android:gravity="center"
+            android:translationX="-2dp"
+            android:layout_marginEnd="-5dp">
 
-        <ImageView
-            android:id="@+id/syncButton"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/baseline_sync_24" />
+            <ImageView
+                android:id="@+id/deleteButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/baseline_delete_24"
+                android:padding="8dp"
+                android:scaleType="centerInside" />
+
+            <!-- Delete Text -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:gravity="center" />
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/dateTimeTextView"
-        android:layout_width="146dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="8dp"
-        android:text="DateTime"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp" />
-</androidx.cardview.widget.CardView>
+</RelativeLayout>
