@@ -111,7 +111,9 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         val tagsList = mutableListOf<Tag>()
         val db = readableDatabase
         val cursor = db.query(
-            TABLE_NAME, null, "$COLUMN_ROOM = ?", arrayOf(room),
+            TABLE_NAME, null,
+            "$COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
+            arrayOf(room, "0"),
             null, null, null
         )
 
@@ -152,8 +154,8 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     fun getTagCountByRoom(roomNumber: String): Int {
         val db = readableDatabase
         val cursor = db.rawQuery(
-            "SELECT COUNT(*) FROM $TABLE_NAME WHERE $COLUMN_ROOM = ?",
-            arrayOf(roomNumber)
+            "SELECT COUNT(*) FROM $TABLE_NAME WHERE $COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
+            arrayOf(roomNumber, "0")
         )
 
         cursor.moveToFirst()
@@ -191,8 +193,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(tagId.toString()))
         db.close()
     }
-
-
 
     fun getTagsForRoom(roomId: String): List<Tag> {
         val tags = mutableListOf<Tag>()
@@ -247,7 +247,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 tagsList.add(tag)
             }
         }
-
         db.close()
         return tagsList
     }

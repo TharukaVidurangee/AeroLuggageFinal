@@ -7,8 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.aeroluggage.ApiResponse
-import com.example.aeroluggage.ApiTag
 import com.example.aeroluggage.R
 import com.example.aeroluggage.data.database.TagAdapter
 import com.example.aeroluggage.data.database.TagDatabaseHelper
@@ -31,19 +29,19 @@ class TagListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_list)
 
-        // Retrieve the staff number passed from the previous activity
-        val staffNo = intent.getStringExtra("STAFF_ID") ?: ""
+//        // Retrieve the staff number passed from the previous activity
+//        val staffNo = intent.getStringExtra("STAFF_ID") ?: ""
+//
+//        // Initialize Retrofit with UnsafeOkHttpClient
+//        val httpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient()
+//
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("https://ulmobservicestest.srilankan.com/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .client(httpClient)
+//            .build()
 
-        // Initialize Retrofit with UnsafeOkHttpClient
-        val httpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient()
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://ulmobservicestest.srilankan.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .client(httpClient)
-            .build()
-
-        apiService = retrofit.create(ApiService::class.java)
+//        apiService = retrofit.create(ApiService::class.java)
 
         // Retrieve the room number passed from RoomsAdapter
         val roomNumber = intent.getStringExtra("ROOM_NUMBER")
@@ -64,9 +62,6 @@ class TagListActivity : AppCompatActivity() {
         val tagAdapter = TagAdapter(tags, this)
         tagRecyclerView.adapter = tagAdapter
     }
-
-    
-
 
 }
 
