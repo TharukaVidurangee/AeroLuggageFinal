@@ -176,44 +176,11 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
     }
 
-    // Update a tag's sync status
-    fun updateTagSyncStatus(id: Int, isSync: Int): Int {
-        val db = writableDatabase
-        val values = ContentValues().apply {
-            put(COLUMN_ISSYNC, isSync)
-        }
-        val rowsAffected = db.update(TABLE_NAME, values, "$COLUMN_ID = ?", arrayOf(id.toString()))
-        db.close()
-        return rowsAffected
-    }
-
     // Delete a tag by its ID
     fun deleteTag(tagId: Int) {
         val db = writableDatabase
         db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(tagId.toString()))
         db.close()
-    }
-
-    fun getTagsForRoom(roomId: String): List<Tag> {
-        val tags = mutableListOf<Tag>()
-        val db = this.readableDatabase
-        val selectQuery = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ROOM = ?"
-        val cursor = db.rawQuery(selectQuery, arrayOf(roomId))
-
-        if (cursor.moveToFirst()) {
-            do {
-                val tag = Tag(
-                    id = cursor.getInt(cursor.getColumnIndexOrThrow("id")),
-                    bagtag = cursor.getString(cursor.getColumnIndexOrThrow("bagtag")),
-                    room = cursor.getString(cursor.getColumnIndexOrThrow("room")),
-                    dateTime = cursor.getString(cursor.getColumnIndexOrThrow("dateTime")),
-                    userID = cursor.getString(cursor.getColumnIndexOrThrow("userID"))
-                )
-                tags.add(tag)
-            } while (cursor.moveToNext())
-        }
-        cursor.close()
-        return tags
     }
 
     // Convert a list of SyncData to JSON
@@ -227,28 +194,4 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             block()
         }
     }
-
-    // Get all tags for a specific room, filtered by a specific date (YYYY-MM-DD)
-    fun getTagsByRoomAndDate(room: String, date: String): List<Tag> {
-        val tagsList = mutableListOf<Tag>()
-        val db = readableDatabase
-        val query = "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ROOM = ? AND $COLUMN_DATE_TIME LIKE ?"
-        val cursor = db.rawQuery(query, arrayOf(room, "$date%"))
-
-        useCursor(cursor) {
-            while (cursor.moveToNext()) {
-                val tag = Tag(
-                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
-                    bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG)),
-                    room = room,
-                    dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
-                    userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
-                )
-                tagsList.add(tag)
-            }
-        }
-        db.close()
-        return tagsList
-    }
-
 }

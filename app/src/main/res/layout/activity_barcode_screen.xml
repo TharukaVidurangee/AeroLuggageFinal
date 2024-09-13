@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/barcodebackground"
+    android:background="@drawable/barcode_screen"
     tools:context=".ui.screens.BarcodeScreen">
 
     <!-- Navigation View for Drawer -->
@@ -66,7 +66,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:backgroundTint="@color/orange"
+                        android:backgroundTint="@color/transparent"
+                        android:background="@drawable/button_background"
                         android:text="Change Room"
                         android:textSize="20sp"
                         android:visibility="gone"
@@ -95,8 +96,8 @@
 
                 <ImageView
                     android:id="@+id/imageView14"
-                    android:layout_width="270dp"
-                    android:layout_height="48dp"
+                    android:layout_width="246dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
                     android:elevation="60dp"
@@ -125,7 +126,7 @@
                     android:layout_height="2dp"
                     android:background="@color/white"
                     tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="135dp" />
+                    tools:layout_editor_absoluteY="137dp" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -141,10 +142,13 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tagRecyclerView"
-                    android:layout_width="410dp"
-                    android:layout_height="439dp"
+                    android:layout_width="389dp"
+                    android:layout_height="476dp"
+                    android:layout_marginStart="12dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
                     android:paddingBottom="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:ignore="MissingConstraints" />
@@ -153,7 +157,7 @@
                     android:id="@+id/syncAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="84dp"
+                    android:layout_marginBottom="76dp"
                     android:backgroundTint="@color/orange"
                     android:text="Sync All"
                     android:textSize="20sp"
