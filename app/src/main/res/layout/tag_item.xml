@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="85dp"
     android:layout_margin="1dp">
 
     <!-- Main content of the card -->
@@ -107,7 +107,7 @@
     <LinearLayout
         android:id="@+id/hidden_buttons"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:gravity="end|center_vertical"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
@@ -117,12 +117,12 @@
         <!-- Sync Button with Background Color -->
         <LinearLayout
             android:layout_width="80dp"
-            android:layout_height="match_parent"
+            android:layout_height="85dp"
             android:orientation="vertical"
             android:background="@drawable/rounded_sync_background"
             android:gravity="center"
-            android:translationZ="12dp"
-            android:translationX="-2dp"
+            android:translationZ="10dp"
+            android:translationX="-8dp"
             android:layout_marginEnd="0dp">
 
             <ImageView
@@ -152,7 +152,7 @@
             android:background="@drawable/rounded_delete_background"
             android:gravity="center"
             android:translationX="-8dp"
-            android:layout_marginEnd="0dp">
+            android:layout_marginEnd="10dp">
 
             <ImageView
                 android:id="@+id/deleteButton"
