@@ -1,9 +1,12 @@
 package com.example.aeroluggage.ui.screens
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +28,7 @@ class TagListActivity : AppCompatActivity() {
     private lateinit var tagAdapter: TagAdapter
     private lateinit var tagDatabaseHelper: TagDatabaseHelper
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_list)
@@ -51,5 +55,9 @@ class TagListActivity : AppCompatActivity() {
         val tagAdapter = TagAdapter(sortedTags, this)
         tagRecyclerView.adapter = tagAdapter
     }
+
+
+
+
 }
 

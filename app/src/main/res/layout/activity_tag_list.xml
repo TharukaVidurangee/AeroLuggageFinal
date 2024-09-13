@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,7 +5,18 @@
     android:background="@drawable/backgroundpic"
     android:padding="12dp">
 
-<!--    to display the room number-->
+    <!-- Toolbar with back button -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/backtoolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:contentInsetStartWithNavigation="0dp"
+        android:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"
+        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <!-- To display the room number -->
     <TextView
         android:id="@+id/roomTextView"
         android:layout_width="wrap_content"
@@ -16,28 +25,25 @@
         android:text="Room Number"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_below="@id/backtoolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp" />
 
-<!--    to add the divider view line-->
+    <!-- To add the divider view line -->
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/roomTextView"
         android:layout_marginTop="2dp"
-        android:background="@android:color/darker_gray"/>
+        android:background="@android:color/darker_gray" />
 
-<!--    to add a recyclerView to display all the bagtags-->
+    <!-- To add a RecyclerView to display all the bagtags -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tagRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/divider"
-        android:layout_marginTop="2dp"/>
+        android:layout_marginTop="2dp" />
 
 </RelativeLayout>
-
-
-
-

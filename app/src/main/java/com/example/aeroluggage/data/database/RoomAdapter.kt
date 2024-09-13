@@ -39,7 +39,7 @@ class RoomAdapter : ListAdapter<Room, RoomAdapter.RoomViewHolder>(RoomDiffCallba
         // Bind function to set data to the views
         fun bind(room: Room) {
             roomTextView.text = "Room ${room.roomNumber}"
-            tagCountTextView.text = "Tag Count: ${room.tagCount}"
+            tagCountTextView.text = "tagCount"
 
             itemView.setOnClickListener {
                 val context = itemView.context
