@@ -1,10 +1,12 @@
 package com.example.aeroluggage.ui.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -141,8 +143,11 @@ class BarcodeScreen : AppCompatActivity() {
 
                 Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
                 Log.d("BarcodeScreen", "Selected CheckId: $roomId")
+
+                // Hide the keyboard after saving
+                hideKeyboard()
             } else {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Re-scan the tag", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -195,7 +200,7 @@ class BarcodeScreen : AppCompatActivity() {
                         setupAutoCompleteTextView(roomMap)
                     } else {
                         Log.e("BarcodeScreen", "Response body is null")
-                        Toast.makeText(this@BarcodeScreen, "No room labels found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@BarcodeScreen, "No rooms found", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Log.e("BarcodeScreen", "Response error: ${response.errorBody()?.string()}")
@@ -274,6 +279,13 @@ class BarcodeScreen : AppCompatActivity() {
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
+    }
+
+    // Function to hide the keyboard
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus ?: View(this)
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }
