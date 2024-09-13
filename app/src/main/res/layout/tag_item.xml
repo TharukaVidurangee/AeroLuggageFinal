@@ -1,7 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="80dp"
     android:layout_margin="4dp">
 
     <!-- Main content of the card -->
@@ -32,9 +32,10 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/baseline_luggage_24" />
 
+            <!-- Modified Layout for DateTime and RoomTextView to align right -->
             <LinearLayout
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
+                android:layout_width="148dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
@@ -44,7 +45,7 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical|start"
                     android:text="Bag Tag"
-                    android:textSize="20sp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tagTextView"
@@ -53,30 +54,41 @@
                     android:layout_marginLeft="10dp"
                     android:gravity="center_vertical|start"
                     android:text="Tag"
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:orientation="vertical"
+                android:paddingEnd="10dp">
 
                 <TextView
                     android:id="@+id/roomTextView"
-                    android:layout_width="137dp"
-                    android:gravity="center_vertical|start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Room No"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/dateTimeTextView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:layout_marginLeft="10dp"
-                    android:text="room no"
-                    android:textSize="16dp" />
+                    android:gravity="end"
+                    android:text="DateTime"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp" />
+
             </LinearLayout>
+
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/dateTimeTextView"
-            android:layout_width="146dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="8dp"
-            android:text="DateTime"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
     </androidx.cardview.widget.CardView>
 
     <!-- Buttons that slide in on the right side of the card -->

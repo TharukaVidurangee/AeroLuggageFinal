@@ -1,10 +1,12 @@
 package com.example.aeroluggage.ui.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,7 @@ import com.example.aeroluggage.data.models.RoomDataItem
 import com.example.aeroluggage.data.models.Tag
 import com.example.aeroluggage.databinding.ActivityBarcodeScreenBinding
 import com.example.aeroluggage.ui.fragments.SettingsFragment
+import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.navigation.NavigationView
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -141,6 +144,9 @@ class BarcodeScreen : AppCompatActivity() {
 
                 Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
                 Log.d("BarcodeScreen", "Selected CheckId: $roomId")
+
+                // Hide the keyboard after saving
+                hideKeyboard()
             } else {
                 Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
             }
@@ -267,6 +273,13 @@ class BarcodeScreen : AppCompatActivity() {
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
+    }
+
+    // Function to hide the keyboard
+    private fun hideKeyboard() {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = currentFocus ?: View(this)
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
 }
