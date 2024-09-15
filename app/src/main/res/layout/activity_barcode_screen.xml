@@ -35,13 +35,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/toolbar"
-                android:paddingTop="00dp">
+                android:paddingTop="00dp"
+                tools:ignore="NotSibling">
 
                 <!-- Updated Layout for Room and Change Room Button -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:ignore="MissingConstraints">
 
 
                     <AutoCompleteTextView
