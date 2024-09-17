@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aeroluggage.data.network.ApiService
 import com.example.aeroluggage.R
@@ -22,6 +25,7 @@ import com.example.aeroluggage.data.database.TagDatabaseHelper
 import com.example.aeroluggage.data.models.RoomDataItem
 import com.example.aeroluggage.data.models.Tag
 import com.example.aeroluggage.databinding.ActivityBarcodeScreenBinding
+import com.example.aeroluggage.ui.fragments.InfoFragment
 import com.example.aeroluggage.ui.fragments.SettingsFragment
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.navigation.NavigationView
@@ -38,7 +42,7 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-class BarcodeScreen : AppCompatActivity() {
+class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var binding: ActivityBarcodeScreenBinding
     private lateinit var db: TagDatabaseHelper
@@ -47,7 +51,6 @@ class BarcodeScreen : AppCompatActivity() {
     private var staffId: String? = null
     private var isRoomFrozen = false
     private lateinit var currentRoomId: String
-
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
 
@@ -62,6 +65,9 @@ class BarcodeScreen : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
+
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
             R.string.open_nav,
             R.string.close_nav
@@ -73,7 +79,7 @@ class BarcodeScreen : AppCompatActivity() {
         staffId = intent.getStringExtra("STAFF_ID")
         val staffName = intent.getStringExtra("STAFF_NAME")
 
-        val navigationView: NavigationView = findViewById(R.id.nav_view)
+        //val navigationView = findViewById<NavigationView>(R.id.nav_view)
         val headerView = navigationView.getHeaderView(0)
 
         // Find the TextViews in the header
@@ -84,23 +90,29 @@ class BarcodeScreen : AppCompatActivity() {
         nameTextView.text = staffName
         staffIdTextView.text = staffId
 
-        navigationView.setNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.nav_history -> {
-                    val intent = Intent(this, RoomHistoryScreen::class.java)
-                    startActivity(intent)
-                }
-                R.id.nav_settings -> supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, SettingsFragment()).commit()
-                R.id.logout -> {
-                    val intent = Intent(this, LoginScreen::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
-                }
-            }
-            drawerLayout.closeDrawer(GravityCompat.START)
-            true
+//        navigationView.setNavigationItemSelectedListener { menuItem ->
+//            when (menuItem.itemId) {
+//                R.id.nav_history -> {
+//                    val intent = Intent(this, RoomHistoryScreen::class.java)
+//                    startActivity(intent)
+//                }
+//                R.id.nav_info -> replaceFragment(InfoFragment())
+//                R.id.nav_settings -> supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragment_container, SettingsFragment()).commit()
+//                R.id.logout -> {
+//                    val intent = Intent(this, LoginScreen::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
+//                    finish()
+//                }
+//            }
+//            drawerLayout.closeDrawer(GravityCompat.START)
+//            true
+//        }
+
+        if (savedInstanceState == null){
+            replaceFragment(SettingsFragment())
+            navigationView.setCheckedItem(R.id.drawer_layout)
         }
 
         // Initialize Retrofit and ApiService for the
@@ -148,7 +160,7 @@ class BarcodeScreen : AppCompatActivity() {
                 // Hide the keyboard after saving
                 hideKeyboard()
             } else {
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Re-enter the room number & Tag", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -157,10 +169,36 @@ class BarcodeScreen : AppCompatActivity() {
             val newRoom = binding.roomEditText.text.toString()
             unfreezeRoomNumber()
             refreshTagsForRoom(newRoom)  // Refresh the RecyclerView for the new room with today's tags
+            Toast.makeText(this, "Room Changed", Toast.LENGTH_SHORT).show()
         }
 
         // Fetch room data
         fetchRoomData()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.nav_history -> {
+                val intent = Intent(this, RoomHistoryScreen::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_info -> replaceFragment(InfoFragment())
+            R.id.nav_settings -> replaceFragment(SettingsFragment())
+            R.id.logout -> {
+                val intent = Intent(this, LoginScreen::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, fragment)
+        transaction.commit()
     }
 
     // Freeze Room Number after it is entered
@@ -253,10 +291,6 @@ class BarcodeScreen : AppCompatActivity() {
         val todayTags = filterTagsByDate(tags)
         val sortedTags = todayTags.sortedByDescending { it.dateTime }  // Sort tags by dateTime in descending order
         tagAdapter.refreshData(sortedTags)
-
-//        val allTagsForRoom = db.getTagsForRoom(room)  // Get all tags for the given room
-//        val filteredTags = filterTagsByDate(allTagsForRoom)  // Filter the tags by today's date
-//        tagAdapter.refreshData(filteredTags)  // Refresh the RecyclerView with the filtered tags
     }
 
     private fun getUnsafeOkHttpClient(): OkHttpClient {
@@ -288,4 +322,13 @@ class BarcodeScreen : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
+    //handle on back click
+    override fun onBackPressed() {
+        super.onBackPressed()
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START)
+        }else{
+            onBackPressedDispatcher.onBackPressed()
+        }
+    }
 }

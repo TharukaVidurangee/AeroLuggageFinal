@@ -33,6 +33,8 @@ class TagListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_list)
 
+//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         // Retrieve the room number passed from RoomsAdapter
         val roomNumber = intent.getStringExtra("ROOM_NUMBER")
 

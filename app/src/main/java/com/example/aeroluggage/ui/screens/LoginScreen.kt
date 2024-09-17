@@ -76,7 +76,7 @@ class LoginScreen : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<UserModel>, t: Throwable) {
-                Toast.makeText(this@LoginScreen, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginScreen, "Connect to a stable connection", Toast.LENGTH_SHORT).show()
             }
         })
     }

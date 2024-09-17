@@ -10,29 +10,65 @@
     tools:context=".ui.screens.RoomHistoryScreen"
     android:padding="12dp">
 
+<!--    <include layout="@layout/backtoolbar" />-->
+
     <!--    to display the room number-->
+
+    <!-- Add a Toolbar for back button support -->
+
+    <!--    to add the divider view line-->
+
+    <!--    to add a recyclerView to display all the bagtags-->
+
     <TextView
         android:id="@+id/roomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="91dp"
+        android:text="Room History"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:text="Room History"
         android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:textStyle="bold" />
 
-    <!--    to add the divider view line-->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:elevation="4dp" >
+<!--        app:title="Room History"-->
+<!--        app:titleTextColor="@color/white" >-->
+
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_arrow_back_ios_new_24"
+            android:padding="8dp">
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Room History"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+
+    </androidx.appcompat.widget.Toolbar>
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/roomTextView"
-        android:layout_marginTop="6dp"
-        android:background="@android:color/darker_gray"/>
+        android:layout_marginTop="22dp"
+        android:background="@android:color/darker_gray" />
 
-    <!--    to add a recyclerView to display all the bagtags-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tagRecyclerView"
         android:layout_width="match_parent"

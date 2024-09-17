@@ -16,8 +16,17 @@
         tools:targetApi="31">
         <activity
             android:name=".ui.screens.RoomHistoryScreen"
-            android:exported="false" />
-        <activity android:name=".ui.screens.TagListActivity" />
+            android:parentActivityName=".ui.screens.BarcodeScreen">
+<!--            android:exported="false">-->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.screens.BarcodeScreen"/>
+        </activity>
+
+
+        <activity
+            android:name=".ui.screens.TagListActivity"/>
+<!--            android:parentActivityName=".ui.screens.RoomHistoryScreen"/>-->
         <activity
             android:name=".utils.JsonUtils"
             android:exported="false" />
@@ -26,12 +35,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.screens.BarcodeScreen"
-            android:exported="false" />
-        <activity
-            android:name=".bag_history_screen"
-            android:exported="false" />
-        <activity
-            android:name=".room_Select"
             android:exported="false" />
         <activity
             android:name=".ui.screens.LoginScreen"
