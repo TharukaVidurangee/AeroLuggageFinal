@@ -106,6 +106,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         return tagsList
     }
 
+
     // Get all tags for a specific room
     fun getTagsByRoom(room: String): List<Tag> {
         val tagsList = mutableListOf<Tag>()

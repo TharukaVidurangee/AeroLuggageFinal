@@ -156,9 +156,14 @@ class TagAdapter(
         holder.deleteButton.setOnClickListener {
             if (holder.hiddenButtons.visibility == View.VISIBLE) {
                 db.deleteTag(tag.id)
-                refreshData(db.getUnsyncedTags()) // Fetch only unsynced tags after deletion
+                refreshData(db.getUnsyncedTags()) // Fetch sorted unsynced tags after deletion
                 Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
                 swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
+
+//                db.deleteTag(tag.id)
+//                refreshData(db.getUnsyncedTags()) // Fetch only unsynced tags after deletion
+//                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
+//                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
             }
         }
     }
@@ -176,7 +181,7 @@ class TagAdapter(
 
     // Refresh the data in the adapter
     fun refreshData(newTags: List<Tag>) {
-        tags = newTags
+        tags = newTags.sortedBy { it.room }
         notifyDataSetChanged()
         swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after data refresh
     }
