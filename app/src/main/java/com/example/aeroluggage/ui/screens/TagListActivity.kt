@@ -33,16 +33,6 @@ class TagListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_list)
 
-//        // Set up the toolbar with a back button
-//        val toolbar: Toolbar = findViewById(R.id.backtoolbar)
-//        setSupportActionBar(toolbar)
-//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-//        toolbar.setNavigationOnClickListener {
-//            val intent = Intent(this, RoomHistoryScreen::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-
         // Retrieve the room number passed from RoomsAdapter
         val roomNumber = intent.getStringExtra("ROOM_NUMBER")
 
@@ -65,9 +55,5 @@ class TagListActivity : AppCompatActivity() {
         val tagAdapter = TagAdapter(sortedTags, this)
         tagRecyclerView.adapter = tagAdapter
     }
-
-
-
-
 }
 

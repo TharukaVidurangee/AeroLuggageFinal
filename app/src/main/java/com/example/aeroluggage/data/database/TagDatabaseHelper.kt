@@ -81,13 +81,19 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     }
 
     // Get all unsynced tags
-    fun getUnsyncedTags(): List<Tag> {
+    fun getUnsyncedTags(room: String): List<Tag> {
         val tagsList = mutableListOf<Tag>()
         val db = readableDatabase
         val cursor = db.query(
-            TABLE_NAME, null, "$COLUMN_ISSYNC = 0",
-            null, null, null, null
+            TABLE_NAME, null,
+            "$COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
+            arrayOf(room, "0"),
+            null, null, null
         )
+//        val cursor = db.query(
+//            TABLE_NAME, null, "$COLUMN_ISSYNC = 0",
+//            null, null, null, null
+//        )
 
         useCursor(cursor) {
             while (cursor.moveToNext()) {
@@ -105,7 +111,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
         return tagsList
     }
-
 
     // Get all tags for a specific room
     fun getTagsByRoom(room: String): List<Tag> {
