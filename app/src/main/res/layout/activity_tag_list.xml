@@ -50,7 +50,7 @@
     <!-- To add a RecyclerView to display all the bagtags -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tagRecyclerView"
-        android:layout_width="match_parent"
+        android:layout_width="390dp"
         android:layout_height="match_parent"
         android:layout_below="@id/divider"
         android:layout_marginTop="5dp" />
@@ -76,7 +76,6 @@
             tools:ignore="MissingConstraints,NotSibling" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </RelativeLayout>

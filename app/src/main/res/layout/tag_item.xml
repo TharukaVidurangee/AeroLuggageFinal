@@ -2,7 +2,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="85dp"
-    android:layout_margin="1dp">
+    android:layout_marginEnd="5dp"
+    android:layout_marginStart="5dp">
 
     <!-- Main content of the card -->
     <androidx.cardview.widget.CardView
@@ -33,7 +34,7 @@
                 android:src="@drawable/baseline_luggage_24" />
 
             <LinearLayout
-                android:layout_width="148dp"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -56,15 +57,6 @@
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
-                <!--                <TextView-->
-                <!--                    android:id="@+id/roomTextView"-->
-                <!--                    android:layout_width="137dp"-->
-                <!--                    android:gravity="center_vertical|start"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_marginTop="4dp"-->
-                <!--                    android:layout_marginLeft="10dp"-->
-                <!--                    android:text="room no"-->
-                <!--                    android:textSize="16dp" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -116,7 +108,7 @@
 
         <!-- Sync Button with Background Color -->
         <LinearLayout
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="85dp"
             android:orientation="vertical"
             android:background="@drawable/rounded_sync_background"
@@ -146,7 +138,7 @@
 
         <!-- Delete Button with Background Color -->
         <LinearLayout
-            android:layout_width="80dp"
+            android:layout_width="90dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/rounded_delete_background"
