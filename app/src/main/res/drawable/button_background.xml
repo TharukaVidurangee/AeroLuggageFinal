@@ -5,7 +5,7 @@
     <!-- Orange border -->
     <stroke
         android:width="4dp"
-        android:color="@color/orange" />
+        android:color="#ed5f1e" />
 
     <!-- Optional: Corner radius -->
     <corners android:radius="8dp"/>

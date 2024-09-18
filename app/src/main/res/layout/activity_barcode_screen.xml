@@ -18,19 +18,16 @@
         <!-- Toolbar for Navigation Drawer -->
         <include layout="@layout/toolbar" />
 
-        <!-- Fragment container -->
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <!-- Main content layout -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- BarcodeScreen content -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -82,20 +79,6 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                <!--                <ImageButton-->
-                <!--                    android:id="@+id/saveButton"-->
-                <!--                    android:layout_width="52dp"-->
-                <!--                    android:layout_height="46dp"-->
-                <!--                    android:layout_marginTop="4dp"-->
-                <!--                    android:layout_marginEnd="28dp"-->
-                <!--                    android:layout_marginBottom="13dp"-->
-                <!--                    android:src="@drawable/baseline_save_24"-->
-                <!--                    app:layout_constraintBottom_toTopOf="@+id/view01"-->
-                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                    app:layout_constraintTop_toBottomOf="@+id/imageView14"-->
-                <!--                    app:layout_constraintVertical_bias="0.0"-->
-                <!--                    tools:ignore="MissingConstraints" />-->
-
                 <ImageView
                     android:id="@+id/imageView14"
                     android:layout_width="246dp"
@@ -127,6 +110,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@color/white"
+                    app:layout_constraintBottom_toTopOf="@id/tagRecyclerView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="137dp"
                     tools:ignore="MissingConstraints" />
@@ -146,10 +131,11 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tagRecyclerView"
                     android:layout_width="360dp"
-                    android:layout_height="496dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_height="520dp"
+                    android:layout_marginTop="4dp"
                     android:paddingBottom="200dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.534"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
                     tools:ignore="MissingConstraints" />
