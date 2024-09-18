@@ -44,8 +44,60 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         }
     }
 
-    // Insert a new tag into the database
-    fun insertTag(tag: Tag) {
+//    // Insert a new tag into the database
+//    fun insertTag(tag: Tag) {
+//        val db = writableDatabase
+//
+//        db.beginTransaction()
+//        try {
+//            // Check if the tag already exists
+//            val existingTagCursor = db.query(
+//                TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
+//                null, null, null
+//            )
+//
+//            if (existingTagCursor.moveToFirst()) {
+//                // If the tag exists, delete the previous record
+//                val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
+//                db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+//            }
+//
+//            existingTagCursor.close()
+//
+//            // Insert the new record
+//            val values = ContentValues().apply {
+//                put(COLUMN_TAG, tag.bagtag)
+//                put(COLUMN_ROOM, tag.room)
+//                put(COLUMN_DATE_TIME, tag.dateTime)
+//                put(COLUMN_ISSYNC, 0) // Unsynced by default
+//                put(COLUMN_USER_ID, tag.userID)
+//            }
+//            db.insert(TABLE_NAME, null, values)
+//            db.setTransactionSuccessful()
+//        } finally {
+//            db.endTransaction()
+//            db.close()
+//        }
+//    }
+
+    fun checkIfTagExists(tag: Tag): Boolean {
+        val db = readableDatabase
+        var exists = false
+
+        val cursor = db.query(
+            TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
+            null, null, null
+        )
+
+        if (cursor.moveToFirst()) {
+            exists = true
+        }
+        cursor.close()
+        db.close()
+        return exists
+    }
+
+    fun insertTag(tag: Tag, overwrite: Boolean = false) {
         val db = writableDatabase
 
         db.beginTransaction()
@@ -57,9 +109,17 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             )
 
             if (existingTagCursor.moveToFirst()) {
-                // If the tag exists, delete the previous record
-                val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
-                db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+                if (overwrite) {
+                    // If the tag exists and user wants to overwrite, delete the previous record
+                    val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
+                    db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+                } else {
+                    // If not overwriting, just return
+                    existingTagCursor.close()
+                    db.endTransaction()
+                    db.close()
+                    return
+                }
             }
 
             existingTagCursor.close()
