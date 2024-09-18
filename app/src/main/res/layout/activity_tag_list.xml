@@ -7,14 +7,16 @@
     android:padding="12dp">
 
 <RelativeLayout
-    android:layout_width="wrap_content"
+    android:layout_width="388dp"
     android:layout_height="45dp"
+    android:gravity="center_vertical"
     android:id="@+id/backbutton1">
 
     <ImageButton
         android:id="@+id/back_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="20dp"
+        android:layout_height="30dp"
+        android:layout_centerVertical="true"
         android:background="@color/transparent"
         android:src="@drawable/baseline_arrow_back_ios_new_24" />
 
@@ -22,16 +24,18 @@
         android:id="@+id/roomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:layout_marginStart="52dp"
-        android:layout_toEndOf="@id/back_button"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="1dp"
         android:gravity="center_horizontal"
-        android:text="Room Number"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColorHint="@color/white"
+        android:layout_toEndOf="@id/back_button"
+        android:layout_marginStart="81dp"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"/>
+        android:text="Room Number"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 
@@ -49,5 +53,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/divider"
-        android:layout_marginTop="2dp"/>
+        android:layout_marginTop="18dp" />
 </RelativeLayout>

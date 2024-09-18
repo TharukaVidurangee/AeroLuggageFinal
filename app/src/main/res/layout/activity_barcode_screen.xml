@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/barcode_screen"
+    android:background="@drawable/barcodebackground"
     tools:context=".ui.screens.BarcodeScreen">
 
     <!-- Navigation View for Drawer -->
@@ -128,7 +128,8 @@
                     android:layout_height="2dp"
                     android:background="@color/white"
                     tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="137dp" />
+                    tools:layout_editor_absoluteY="137dp"
+                    tools:ignore="MissingConstraints" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -144,11 +145,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tagRecyclerView"
-                    android:layout_width="389dp"
-                    android:layout_height="476dp"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="12dp"
+                    android:layout_width="360dp"
+                    android:layout_height="496dp"
+                    android:layout_marginTop="12dp"
                     android:paddingBottom="200dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -159,7 +158,7 @@
                     android:id="@+id/syncAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="76dp"
+                    android:layout_marginBottom="84dp"
                     android:backgroundTint="@color/orange"
                     android:text="Sync All"
                     android:textSize="20sp"
