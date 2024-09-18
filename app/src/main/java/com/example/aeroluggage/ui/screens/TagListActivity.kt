@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import android.widget.Toolbar
@@ -32,6 +33,14 @@ class TagListActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_list)
+
+        // Set up the back button to navigate back to BarcodeScreen
+        val backButton: ImageButton = findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            val intent = Intent(this, RoomHistoryScreen::class.java)
+            startActivity(intent)
+            finish()
+        }
 
 //        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 

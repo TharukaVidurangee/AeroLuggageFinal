@@ -6,38 +6,41 @@
     android:background="@drawable/backgroundpic"
     android:padding="12dp">
 
-<!--    &lt;!&ndash; Toolbar with back button &ndash;&gt;-->
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/backtoolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:background="?attr/colorPrimary"-->
-<!--        android:contentInsetStartWithNavigation="0dp"-->
-<!--        android:navigationIcon="@drawable/baseline_arrow_back_ios_new_24"-->
-<!--        android:popupTheme="@style/ThemeOverlay.AppCompat.Light"-->
-<!--        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"-->
-<!--        android:title="Room History"-->
-<!--        android:titleTextColor="@android:color/white"/>-->
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="45dp"
+    android:id="@+id/backbutton1">
 
-    <!-- To display the room number -->
+    <ImageButton
+        android:id="@+id/back_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:src="@drawable/baseline_arrow_back_ios_new_24" />
+
     <TextView
         android:id="@+id/roomTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:layout_marginStart="52dp"
+        android:layout_toEndOf="@id/back_button"
+        android:gravity="center_horizontal"
         android:text="Room Number"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
+        android:textColorHint="@color/white"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"/>
 
-    <!-- To add the divider view line -->
+</RelativeLayout>
+
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@id/roomTextView"
-        android:layout_marginTop="2dp"
+        android:layout_below="@id/backbutton1"
+        android:layout_marginTop="10dp"
         android:background="@android:color/darker_gray"/>
 
     <!-- To add a RecyclerView to display all the bagtags -->

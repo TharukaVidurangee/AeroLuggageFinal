@@ -46,9 +46,13 @@
 
 package com.example.aeroluggage.ui.screens
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -61,16 +65,12 @@ class RoomHistoryScreen : AppCompatActivity() {
 
     private lateinit var RoomAdapter: RoomAdapter
     private lateinit var TagDatabaseHelper: TagDatabaseHelper
+//    private lateinit var Toolbar: Toolbar
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_room_history_screen)
-
-        // Enable the back button in the action bar
-        supportActionBar?.apply {
-            title = "Room History"
-            setDisplayHomeAsUpEnabled(true)
-        }
 
         // Set up the RecyclerView
         val roomRecyclerView: RecyclerView = findViewById(R.id.tagRecyclerView)
@@ -87,6 +87,14 @@ class RoomHistoryScreen : AppCompatActivity() {
         // Create a list of Room objects
         val roomsList = distinctRooms.map { roomNumber ->
             Room(roomNumber, tagDatabaseHelper.getTagCountByRoom(roomNumber))
+        }
+
+        // Set up the back button to navigate back to BarcodeScreen
+        val backButton: ImageButton = findViewById(R.id.back_button)
+        backButton.setOnClickListener {
+            val intent = Intent(this, BarcodeScreen::class.java)
+            startActivity(intent)
+            finish()
         }
 
         // Submit the list to the adapter
