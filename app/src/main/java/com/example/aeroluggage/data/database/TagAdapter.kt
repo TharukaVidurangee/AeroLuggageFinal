@@ -28,6 +28,7 @@ import retrofit2.Response
 
 // Adapter class for displaying tags in a RecyclerView
 class TagAdapter(
+
     private var tags: List<Tag>,  // List of Tag objects
     private val context: Context   // Context for Toasts and API calls
 ) : RecyclerView.Adapter<TagAdapter.TagViewHolder>() {
@@ -159,11 +160,6 @@ class TagAdapter(
                 refreshData(db.getUnsyncedTags(tag.room)) // Fetch sorted unsynced tags after deletion
                 Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
                 swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
-
-//                db.deleteTag(tag.id)
-//                refreshData(db.getUnsyncedTags()) // Fetch only unsynced tags after deletion
-//                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
-//                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
             }
         }
     }

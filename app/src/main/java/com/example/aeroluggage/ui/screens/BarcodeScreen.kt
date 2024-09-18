@@ -90,26 +90,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         nameTextView.text = staffName
         staffIdTextView.text = staffId
 
-//        navigationView.setNavigationItemSelectedListener { menuItem ->
-//            when (menuItem.itemId) {
-//                R.id.nav_history -> {
-//                    val intent = Intent(this, RoomHistoryScreen::class.java)
-//                    startActivity(intent)
-//                }
-//                R.id.nav_info -> replaceFragment(InfoFragment())
-//                R.id.nav_settings -> supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fragment_container, SettingsFragment()).commit()
-//                R.id.logout -> {
-//                    val intent = Intent(this, LoginScreen::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    startActivity(intent)
-//                    finish()
-//                }
-//            }
-//            drawerLayout.closeDrawer(GravityCompat.START)
-//            true
-//        }
-
         if (savedInstanceState == null){
             replaceFragment(SettingsFragment())
             navigationView.setCheckedItem(R.id.drawer_layout)

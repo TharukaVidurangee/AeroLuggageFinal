@@ -3,25 +3,16 @@ package com.example.aeroluggage.ui.screens
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aeroluggage.R
 import com.example.aeroluggage.TagAdapter
 import com.example.aeroluggage.data.database.TagDatabaseHelper
-import com.example.aeroluggage.data.models.Tag
 import com.example.aeroluggage.data.network.ApiService
-import com.example.aeroluggage.data.network.UnsafeOkHttpClient
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class TagListActivity : AppCompatActivity() {
 
@@ -41,8 +32,6 @@ class TagListActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         // Retrieve the room number passed from RoomsAdapter
         val roomNumber = intent.getStringExtra("ROOM_NUMBER")
@@ -65,6 +54,13 @@ class TagListActivity : AppCompatActivity() {
         //setup the adapter and pass the tags in to it
         val tagAdapter = TagAdapter(sortedTags, this)
         tagRecyclerView.adapter = tagAdapter
+
+        // Handle Sync All button click
+        val syncAllButton: Button = findViewById(R.id.syncAllButton2)
+        syncAllButton.setOnClickListener {
+            tagAdapter.syncAllTags()
+        }
     }
 }
+
 

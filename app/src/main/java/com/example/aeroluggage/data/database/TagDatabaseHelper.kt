@@ -90,10 +90,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
             arrayOf(room, "0"),
             null, null, null
         )
-//        val cursor = db.query(
-//            TABLE_NAME, null, "$COLUMN_ISSYNC = 0",
-//            null, null, null, null
-//        )
 
         useCursor(cursor) {
             while (cursor.moveToNext()) {
