@@ -81,9 +81,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:background="@drawable/button_border"
+                        android:textColor="@color/grey"
+                        android:backgroundTint="@color/transparent"
                         android:text="Change Room"
-                        android:textSize="20sp"
+                        android:textSize="14sp"
                         android:visibility="gone"
                         app:cornerRadius="12dp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -163,8 +164,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tagRecyclerView"
-                    android:layout_width="367dp"
-                    android:layout_height="504dp"
+                    android:layout_width="363dp"
+                    android:layout_height="480dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"

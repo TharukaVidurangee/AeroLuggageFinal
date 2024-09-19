@@ -73,7 +73,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="end"
                     android:text="room no"
-                    android:textSize="16sp" />
+                    android:textSize="11sp" />
 
                 <TextView
                     android:id="@+id/dateTimeTextView"

@@ -150,6 +150,13 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             }
 
         }
+//        val imageView18 = findViewById<Button>(R.id.imageView18)
+//        val changeRoomButton = findViewById<Button>(R.id.changeRoomButton)
+
+//        // Initially set imageView18 to disabled if roomEditText has a value
+//        if (roomEditText.text.toString().isNotEmpty()) {
+//            imageView18.visibility = View.INVISIBLE // Use INVISIBLE or GONE based on requirement
+//        }
 
         // Handle Change Room Button Click
         binding.changeRoomButton.setOnClickListener {
@@ -157,6 +164,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             unfreezeRoomNumber()
             refreshTagsForRoom(newRoom)  // Refresh the RecyclerView for the new room with today's tags
             Toast.makeText(this, "Room Changed", Toast.LENGTH_SHORT).show()
+            //imageView18.visibility = View.INVISIBLE
         }
 
 
