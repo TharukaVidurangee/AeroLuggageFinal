@@ -5,9 +5,10 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import com.example.aeroluggage.data.models.SyncData
 import com.example.aeroluggage.data.models.Tag
+import com.example.aeroluggage.ui.screens.BarcodeScreen
 import com.google.gson.Gson
 
 class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -63,7 +64,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
 //            }
 //
 //            existingTagCursor.close()
-//
 //            // Insert the new record
 //            val values = ContentValues().apply {
 //                put(COLUMN_TAG, tag.bagtag)
@@ -80,65 +80,211 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
 //        }
 //    }
 
-    fun checkIfTagExists(tag: Tag): Boolean {
-        val db = readableDatabase
-        var exists = false
+//    fun insertTag(context: BarcodeScreen, tag: Tag) {
+//        val db = writableDatabase
+//
+//        db.beginTransaction()
+//        try {
+//            // Check if the tag already exists
+//            val existingTagCursor = db.query(
+//                TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
+//                null, null, null
+//            )
+//
+//            if (existingTagCursor.moveToFirst()) {
+//                // Show AlertDialog to ask user if they want to overwrite the tag
+//                AlertDialog.Builder(context)
+//                    .setTitle("Tag Exists")
+//                    .setMessage("This tag already exists. Do you want to overwrite it?")
+//                    .setPositiveButton("Yes") { dialog, _ ->
+//                        // If user chooses "Yes," delete the previous record and insert the new one
+//                        val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
+//                        db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+//
+//                        // Insert the new record
+//                        val values = ContentValues().apply {
+//                            put(COLUMN_TAG, tag.bagtag)
+//                            put(COLUMN_ROOM, tag.room)
+//                            put(COLUMN_DATE_TIME, tag.dateTime)
+//                            put(COLUMN_ISSYNC, 0) // Unsynced by default
+//                            put(COLUMN_USER_ID, tag.userID)
+//                        }
+//                        db.insert(TABLE_NAME, null, values)
+//                        db.setTransactionSuccessful()
+//                        dialog.dismiss()
+//                    }
+//                    .setNegativeButton("No") { dialog, _ ->
+//                        // If user chooses "No," do nothing
+//                        dialog.dismiss()
+//                    }
+//                    .create()
+//                    .show()
+//            } else {
+//                // If tag doesn't exist, insert the new record
+//                val values = ContentValues().apply {
+//                    put(COLUMN_TAG, tag.bagtag)
+//                    put(COLUMN_ROOM, tag.room)
+//                    put(COLUMN_DATE_TIME, tag.dateTime)
+//                    put(COLUMN_ISSYNC, 0) // Unsynced by default
+//                    put(COLUMN_USER_ID, tag.userID)
+//                }
+//                db.insert(TABLE_NAME, null, values)
+//                db.setTransactionSuccessful()
+//            }
+//            existingTagCursor.close()
+//        } finally {
+//            db.endTransaction()
+//            db.close()
+//        }
+//    }
 
-        val cursor = db.query(
+//    fun insertTag(context: Context, tag: Tag) {
+//        val db = writableDatabase
+//
+//        //var shouldInsert = true
+//
+//        // Check if the tag already exists
+//        val existingTagCursor = db.query(
+//            TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
+//            null, null, null
+//        )
+//
+//        if (existingTagCursor.moveToFirst()) {
+//            // Show AlertDialog to ask user if they want to overwrite the tag
+//            AlertDialog.Builder(context)
+//                .setTitle("Tag Exists")
+//                .setMessage("This tag already exists. Do you want to overwrite it?")
+//                .setPositiveButton("Yes") { dialog, _ ->
+//                    // If user chooses "Yes," delete the previous record
+//                    db.beginTransaction()
+//                    try {
+//                        val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
+//                        db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
+//
+//                        // Insert the new record
+//                        val values = ContentValues().apply {
+//                            put(COLUMN_TAG, tag.bagtag)
+//                            put(COLUMN_ROOM, tag.room)
+//                            put(COLUMN_DATE_TIME, tag.dateTime)
+//                            put(COLUMN_ISSYNC, 0) // Unsynced by default
+//                            put(COLUMN_USER_ID, tag.userID)
+//                        }
+//                        db.insert(TABLE_NAME, null, values)
+//                        db.setTransactionSuccessful()
+//                    } finally {
+//                        db.endTransaction()
+//                        //db.close()
+//                        dialog.dismiss()
+//                        //closing the cursor and the database
+//                        existingTagCursor.close()
+//                        db.close()
+//                    }
+//                }
+//                .setNegativeButton("No") { dialog, _ ->
+//                    // If user chooses "No," do nothing
+//                    //shouldInsert = false
+//                    dialog.dismiss()
+//                    //closing the cursor and the database
+//                    existingTagCursor.close()
+//                    db.close()
+//
+//                }
+//                .setOnDismissListener {
+//                    // Close the cursor when the dialog is dismissed
+////                    existingTagCursor.close()
+////                    db.close()
+//                }
+//                .create()
+//                .show()
+//        } else {
+//            // If tag doesn't exist, insert the new record
+//            db.beginTransaction()
+//            try {
+//
+//                val values = ContentValues().apply {
+//                    put(COLUMN_TAG, tag.bagtag)
+//                    put(COLUMN_ROOM, tag.room)
+//                    put(COLUMN_DATE_TIME, tag.dateTime)
+//                    put(COLUMN_ISSYNC, 0) // Unsynced by default
+//                    put(COLUMN_USER_ID, tag.userID)
+//                }
+//                db.insert(TABLE_NAME, null, values)
+//                db.setTransactionSuccessful()
+//            } finally {
+//                db.endTransaction()
+//                db.close()
+//                existingTagCursor.close()
+//            }
+//        }
+//    }
+
+    fun insertTag(context: Context, tag: Tag) {
+        // Open the database, but do not close it immediately
+
+        // Check if the tag already exists
+        val existingTagCursor = readableDatabase.query(
             TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
             null, null, null
         )
 
-        if (cursor.moveToFirst()) {
-            exists = true
-        }
-        cursor.close()
-        db.close()
-        return exists
-    }
+        if (existingTagCursor.moveToFirst()) {
+            // Show AlertDialog to ask user if they want to overwrite the tag
+            AlertDialog.Builder(context)
+                .setTitle("Tag Exists")
+                .setMessage("This tag already exists. Do you want to overwrite it?")
+                .setPositiveButton("Yes") { dialog, _ ->
+                    val db = writableDatabase // Open the writable database inside the click listener
+                    db.beginTransaction()
+                    try {
+                        val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
+                        db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
 
-    fun insertTag(tag: Tag, overwrite: Boolean = false) {
-        val db = writableDatabase
-
-        db.beginTransaction()
-        try {
-            // Check if the tag already exists
-            val existingTagCursor = db.query(
-                TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
-                null, null, null
-            )
-
-            if (existingTagCursor.moveToFirst()) {
-                if (overwrite) {
-                    // If the tag exists and user wants to overwrite, delete the previous record
-                    val id = existingTagCursor.getInt(existingTagCursor.getColumnIndexOrThrow(COLUMN_ID))
-                    db.delete(TABLE_NAME, "$COLUMN_ID = ?", arrayOf(id.toString()))
-                } else {
-                    // If not overwriting, just return
-                    existingTagCursor.close()
-                    db.endTransaction()
-                    db.close()
-                    return
+                        // Insert the new record
+                        val values = ContentValues().apply {
+                            put(COLUMN_TAG, tag.bagtag)
+                            put(COLUMN_ROOM, tag.room)
+                            put(COLUMN_DATE_TIME, tag.dateTime)
+                            put(COLUMN_ISSYNC, 0) // Unsynced by default
+                            put(COLUMN_USER_ID, tag.userID)
+                        }
+                        db.insert(TABLE_NAME, null, values)
+                        db.setTransactionSuccessful()
+                    } finally {
+                        db.endTransaction()
+                    }
+                    dialog.dismiss()
                 }
+                .setNegativeButton("No") { dialog, _ ->
+                    // Do nothing, just dismiss the dialog
+                    dialog.dismiss()
+                }
+                .setOnDismissListener {
+                    existingTagCursor.close()
+                }
+                .create()
+                .show()
+        } else {
+            // If tag doesn't exist, insert the new record
+            val db = writableDatabase // Open the writable database here
+            db.beginTransaction()
+            try {
+                val values = ContentValues().apply {
+                    put(COLUMN_TAG, tag.bagtag)
+                    put(COLUMN_ROOM, tag.room)
+                    put(COLUMN_DATE_TIME, tag.dateTime)
+                    put(COLUMN_ISSYNC, 0) // Unsynced by default
+                    put(COLUMN_USER_ID, tag.userID)
+                }
+                db.insert(TABLE_NAME, null, values)
+                db.setTransactionSuccessful()
+            } finally {
+                db.endTransaction()
+                existingTagCursor.close()
             }
-
-            existingTagCursor.close()
-
-            // Insert the new record
-            val values = ContentValues().apply {
-                put(COLUMN_TAG, tag.bagtag)
-                put(COLUMN_ROOM, tag.room)
-                put(COLUMN_DATE_TIME, tag.dateTime)
-                put(COLUMN_ISSYNC, 0) // Unsynced by default
-                put(COLUMN_USER_ID, tag.userID)
-            }
-            db.insert(TABLE_NAME, null, values)
-            db.setTransactionSuccessful()
-        } finally {
-            db.endTransaction()
-            db.close()
         }
     }
+
+
 
     // Get all unsynced tags
     fun getUnsyncedTags(room: String): List<Tag> {

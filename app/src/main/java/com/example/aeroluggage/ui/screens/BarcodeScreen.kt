@@ -10,7 +10,6 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
@@ -21,14 +20,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.aeroluggage.data.network.ApiService
 import com.example.aeroluggage.R
 import com.example.aeroluggage.TagAdapter
-//import com.example.aeroluggage.data.database.TagAdapter
 import com.example.aeroluggage.data.database.TagDatabaseHelper
 import com.example.aeroluggage.data.models.RoomDataItem
 import com.example.aeroluggage.data.models.Tag
 import com.example.aeroluggage.databinding.ActivityBarcodeScreenBinding
 import com.example.aeroluggage.ui.fragments.InfoFragment
 import com.example.aeroluggage.ui.fragments.SettingsFragment
-import com.google.android.material.internal.ViewUtils.hideKeyboard
 import com.google.android.material.navigation.NavigationView
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -127,11 +124,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             if (roomId.isNotEmpty() && bagTag.isNotEmpty()) {
                 val dateTime = getCurrentDateTime()
                 val tag = Tag(0, bagTag, roomId, dateTime, userID = staffId ?: "")
-                db.insertTag(tag)
+                db.insertTag(this, tag)
                 loadTagsForRoom(roomId)
                 binding.tagEditText.text.clear()
 
-                saveTag(tag)
+                //saveTag(tag)
 
                 if (!isRoomFrozen) {
                     freezeRoomNumber(roomId)
@@ -162,29 +159,28 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         fetchRoomData()
     }
 
-    private fun saveTag(tag: Tag) {
-        val dbHelper = TagDatabaseHelper(this)
-        val tagExists = dbHelper.checkIfTagExists(tag)
-        if (tagExists) {
-            // Show a dialog to the user to confirm overwrite
-            AlertDialog.Builder(this)
-                .setTitle("Tag Exists")
-                .setMessage("This tag already exists. Do you want to overwrite it?")
-                .setPositiveButton("Yes") { _, _ ->
-                    // User chose to overwrite, insert with overwrite flag true
-                    dbHelper.insertTag(tag, overwrite = true)
-                }
-                .setNegativeButton("No") { dialog, _ ->
-                    // User chose not to overwrite
-                    dialog.dismiss()
-                }
-                .show()
-        } else {
-            // Tag doesn't exist, proceed with normal insertion
-            dbHelper.insertTag(tag)
-        }
-
-    }
+//    private fun saveTag(tag: Tag) {
+//        val dbHelper = TagDatabaseHelper(this)
+//        val tagExists = dbHelper.checkIfTagExists(tag)
+//        if (tagExists) {
+//            // Show a dialog to the user to confirm overwrite
+//            AlertDialog.Builder(this)
+//                .setTitle("Tag Exists")
+//                .setMessage("This tag already exists. Do you want to overwrite it?")
+//                .setPositiveButton("Yes") { _, _ ->
+//                    // User chose to overwrite, insert with overwrite flag true
+//                    dbHelper.insertTag(tag, overwrite = true)
+//                }
+//                .setNegativeButton("No") { dialog, _ ->
+//                    // User chose not to overwrite
+//                    dialog.dismiss()
+//                }
+//                .show()
+//        } else {
+//            // Tag doesn't exist, proceed with normal insertion
+//            dbHelper.insertTag(tag)
+//        }
+//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
