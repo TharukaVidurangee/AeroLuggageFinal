@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ import com.example.aeroluggage.ui.fragments.InfoFragment
 import com.example.aeroluggage.ui.fragments.SettingsFragment
 import com.google.android.material.navigation.NavigationView
 import okhttp3.OkHttpClient
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,6 +59,10 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         super.onCreate(savedInstanceState)
         binding = ActivityBarcodeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val roomEditText = findViewById<AutoCompleteTextView>(R.id.roomEditText)
+        roomEditText.background = ContextCompat.getDrawable(this, R.drawable.no_border_edit_text)
+
 
         // Initialize the toolbar and drawer
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -153,6 +159,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             Toast.makeText(this, "Room Changed", Toast.LENGTH_SHORT).show()
         }
 
+
         // Fetch room data
         fetchRoomData()
     }
@@ -238,6 +245,8 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private fun setupAutoCompleteTextView(roomMap: Map<String, String>) {
         val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roomMap.keys.toList())
         val roomEditText = findViewById<AutoCompleteTextView>(R.id.roomEditText)
+        val imageView18 = findViewById<ImageView>(R.id.imageView18)
+
         roomEditText.setAdapter(adapter)
         roomEditText.threshold = 1
 
@@ -245,6 +254,9 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             val selectedLabel = adapter.getItem(position)
             val selectedCheckId = roomMap[selectedLabel]
             roomEditText.tag = selectedCheckId
+
+            // Hide imageView18 when a valid room number is selected
+            imageView18.visibility = View.GONE
         }
     }
 
@@ -269,10 +281,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
         Log.d("BarcodeScreen", "Filtered tags count: ${filteredTags.size}")
         return filteredTags
-
-//        return tags.filter { tag ->
-//            tag.dateTime.startsWith(currentDate)  // Assuming dateTime is in "yyyy-MM-dd HH:mm:ss" format
-//        }
     }
 
     // Method to refresh the tags for a specific room
