@@ -36,7 +36,7 @@
         app:layout_constraintHorizontal_bias="0.453"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8"
-        app:srcCompat="@drawable/sla_logo"
+        app:srcCompat="@drawable/white_logo"
         tools:ignore="MissingConstraints" />
 
     <View

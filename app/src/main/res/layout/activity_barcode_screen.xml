@@ -81,8 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:backgroundTint="@color/transparent"
-                        android:background="@drawable/button_background"
+                        android:background="@drawable/button_border"
                         android:text="Change Room"
                         android:textSize="20sp"
                         android:visibility="gone"
@@ -109,7 +108,7 @@
                 <Button
                     android:id="@+id/saveButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="55dp"
                     android:layout_marginTop="5dp"
                     android:backgroundTint="@color/orange"
                     android:text="Save"
@@ -119,6 +118,25 @@
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
                     tools:ignore="MissingConstraints" />
+
+                <EditText
+                    android:id="@+id/tagEditText"
+                    android:layout_width="196dp"
+                    android:layout_height="38dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@null"
+                    android:hint="Enter Bag Tag"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintHorizontal_bias="0.148"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14"
+                    app:srcCompat="@drawable/white_input"
+                    tools:ignore="UnknownIdInLayout" />
+
+
 
                 <View
                     android:id="@+id/view01"
@@ -137,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="14dp"
-                    android:text="Bags In Room"
+                    android:text="Bags in Room"
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -145,8 +163,8 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/tagRecyclerView"
-                    android:layout_width="362dp"
-                    android:layout_height="496dp"
+                    android:layout_width="367dp"
+                    android:layout_height="504dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginEnd="10dp"
@@ -170,22 +188,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="MissingConstraints" />
 
-                <EditText
-                    android:id="@+id/tagEditText"
-                    android:layout_width="196dp"
-                    android:layout_height="38dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@null"
-                    android:hint="Enter Bag Tag"
-                    android:textColor="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textSize="20dp"
-                    app:layout_constraintBottom_toTopOf="@+id/textView"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
-                    app:layout_constraintHorizontal_bias="0.148"
-                    app:layout_constraintStart_toStartOf="@+id/imageView14"
-                    app:srcCompat="@drawable/white_input"
-                    tools:ignore="UnknownIdInLayout" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

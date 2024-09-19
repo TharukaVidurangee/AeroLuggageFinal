@@ -36,9 +36,11 @@
             android:exported="false" />
         <activity
             android:name=".ui.screens.BarcodeScreen"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".ui.screens.LoginScreen"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.AeroLuggage" />

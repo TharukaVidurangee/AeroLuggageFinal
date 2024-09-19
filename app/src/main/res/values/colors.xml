@@ -4,6 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#ed5f1e</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="grey">#FF2E2E2E</color>
+
 
     <color name="syncButtonBackground">#FF2E2E2E</color> <!-- Dark Gray/Black -->
     <color name="deleteButtonBackground">#FFFF3B30</color> <!-- Red -->
