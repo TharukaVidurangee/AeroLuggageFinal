@@ -145,8 +145,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
         }
 
-
-
         // Handle Change Room Button Click
         binding.changeRoomButton.setOnClickListener {
             val newRoom = binding.roomEditText.text.toString()
@@ -158,29 +156,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         // Fetch room data
         fetchRoomData()
     }
-
-//    private fun saveTag(tag: Tag) {
-//        val dbHelper = TagDatabaseHelper(this)
-//        val tagExists = dbHelper.checkIfTagExists(tag)
-//        if (tagExists) {
-//            // Show a dialog to the user to confirm overwrite
-//            AlertDialog.Builder(this)
-//                .setTitle("Tag Exists")
-//                .setMessage("This tag already exists. Do you want to overwrite it?")
-//                .setPositiveButton("Yes") { _, _ ->
-//                    // User chose to overwrite, insert with overwrite flag true
-//                    dbHelper.insertTag(tag, overwrite = true)
-//                }
-//                .setNegativeButton("No") { dialog, _ ->
-//                    // User chose not to overwrite
-//                    dialog.dismiss()
-//                }
-//                .show()
-//        } else {
-//            // Tag doesn't exist, proceed with normal insertion
-//            dbHelper.insertTag(tag)
-//        }
-//    }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -227,6 +202,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
     private fun loadTagsForRoom(roomId: String) {
         val tags = db.getTagsByRoom(roomId)
+        val todayTags = filterTagsByDate(tags)
         val sortedTags = tags.sortedByDescending { it.dateTime }
         tagAdapter.refreshData(sortedTags)
     }
@@ -286,9 +262,17 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     // Method to filter tags by today's date
     private fun filterTagsByDate(tags: List<Tag>): List<Tag> {
         val currentDate = getCurrentDate()
-        return tags.filter { tag ->
-            tag.dateTime.startsWith(currentDate)  // Assuming dateTime is in "yyyy-MM-dd HH:mm:ss" format
+        Log.d("BarcodeScreen", "Filtering tags for date: $currentDate")
+        val filteredTags = tags.filter { tag ->
+            Log.d("BarcodeScreen", "Checking tag date: ${tag.dateTime}")
+            tag.dateTime.startsWith(currentDate)
         }
+        Log.d("BarcodeScreen", "Filtered tags count: ${filteredTags.size}")
+        return filteredTags
+
+//        return tags.filter { tag ->
+//            tag.dateTime.startsWith(currentDate)  // Assuming dateTime is in "yyyy-MM-dd HH:mm:ss" format
+//        }
     }
 
     // Method to refresh the tags for a specific room
