@@ -153,6 +153,10 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             unfreezeRoomNumber()
             refreshTagsForRoom(newRoom)  // Refresh the RecyclerView for the new room with today's tags
             Toast.makeText(this, "Room Changed", Toast.LENGTH_SHORT).show()
+
+            //making the border visible when the room is changed
+            binding.imageView18.visibility = View.VISIBLE
+
         }
 
         // Fetch room data
