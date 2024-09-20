@@ -6,7 +6,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/barcodebackground"
+    android:background="@drawable/screen"
     tools:context=".ui.screens.BarcodeScreen">
 
     <!-- Navigation View for Drawer -->
@@ -81,7 +81,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:textColor="@color/grey"
+                        android:textColor="@color/greywhite"
                         android:backgroundTint="@color/transparent"
                         android:text="Change Room"
                         android:textSize="14sp"

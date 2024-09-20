@@ -4,7 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="orange">#ed5f1e</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="greywhite">#A5A8B1</color>
+
     <color name="grey">#FF2E2E2E</color>
+
+
 
 
     <color name="syncButtonBackground">#FF2E2E2E</color> <!-- Dark Gray/Black -->
