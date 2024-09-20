@@ -113,6 +113,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         binding.tagRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.tagRecyclerView.adapter = tagAdapter
 
+        // Hide textView, syncAllButton, and view01 initially
+        binding.textView.visibility = View.GONE
+        binding.syncAllButton.visibility = View.GONE
+        binding.view01.visibility = View.GONE
+
         // Handle Sync All button click
         binding.syncAllButton.setOnClickListener {
             tagAdapter.syncAllTags()
@@ -130,11 +135,14 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 loadTagsForRoom(roomId)
                 binding.tagEditText.text.clear()
 
-                //saveTag(tag)
-
                 if (!isRoomFrozen) {
                     freezeRoomNumber(roomId)
                 }
+
+                // Show textView, syncAllButton, and view01 after saving the tag
+                binding.textView.visibility = View.VISIBLE
+                binding.syncAllButton.visibility = View.VISIBLE
+                binding.view01.visibility = View.VISIBLE
 
                 Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
                 Log.d("BarcodeScreen", "Selected CheckId: $roomId")

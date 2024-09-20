@@ -137,8 +137,6 @@
                     app:srcCompat="@drawable/white_input"
                     tools:ignore="UnknownIdInLayout" />
 
-
-
                 <View
                     android:id="@+id/view01"
                     android:layout_width="match_parent"
