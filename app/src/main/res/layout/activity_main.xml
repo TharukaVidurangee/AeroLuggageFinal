@@ -23,7 +23,7 @@
         android:layout_height="296dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/aeroluggage_logo"
+        app:srcCompat="@drawable/applogo"
         tools:layout_editor_absoluteY="32dp"
         tools:ignore="MissingConstraints" />
 

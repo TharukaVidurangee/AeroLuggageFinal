@@ -24,11 +24,11 @@
         android:id="@+id/imageView6"
         android:layout_width="229dp"
         android:layout_height="217dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView7"
-        app:srcCompat="@drawable/aeroluggage_logo"
+        app:srcCompat="@drawable/applogo"
         tools:ignore="MissingConstraints" />
 
     <EditText

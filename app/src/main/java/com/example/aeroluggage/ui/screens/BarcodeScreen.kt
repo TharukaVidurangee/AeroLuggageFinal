@@ -60,10 +60,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         binding = ActivityBarcodeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val roomEditText = findViewById<AutoCompleteTextView>(R.id.roomEditText)
-        roomEditText.background = ContextCompat.getDrawable(this, R.drawable.no_border_edit_text)
-
-
         // Initialize the toolbar and drawer
         drawerLayout = findViewById(R.id.drawer_layout)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -121,14 +117,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         binding.syncAllButton.setOnClickListener {
             tagAdapter.syncAllTags()
         }
-
-        // Hide keyboard after entering room number
-        roomEditText.setOnEditorActionListener { v, actionId, event ->
-            hideKeyboard()
-            true // Returning true to indicate the action was handled
-        }
-
-
 
         // Handle Save Button Click
         binding.saveButton.setOnClickListener {
@@ -264,6 +252,9 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
 
             // Hide imageView18 when a valid room number is selected
             imageView18.visibility = View.GONE
+
+            //hide the keyboard after selecting the room
+            hideKeyboard()
         }
     }
 
@@ -288,6 +279,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
         Log.d("BarcodeScreen", "Filtered tags count: ${filteredTags.size}")
         return filteredTags
+
     }
 
     // Method to refresh the tags for a specific room
