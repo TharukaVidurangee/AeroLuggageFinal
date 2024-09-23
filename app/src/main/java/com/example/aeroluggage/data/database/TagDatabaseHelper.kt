@@ -214,6 +214,32 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
     }
 
+    fun getTagsForToday(room: String): List<Tag> {
+        val tagsList = mutableListOf<Tag>()
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_NAME WHERE $COLUMN_ROOM = ? AND DATE($COLUMN_DATE_TIME) = DATE('now')",
+            arrayOf(room)
+        )
+
+        useCursor(cursor) {
+            while (cursor.moveToNext()) {
+                val tag = Tag(
+                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                    bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG)),
+                    room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM)),
+                    dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
+                    userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+                )
+                tagsList.add(tag)
+            }
+        }
+
+        db.close()
+        return tagsList
+    }
+
+
     // Convert a list of SyncData to JSON
     fun convertToJSON(syncDataList: List<SyncData>): String {
         return Gson().toJson(syncDataList)

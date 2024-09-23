@@ -67,13 +67,7 @@
                 android:orientation="vertical"
                 android:paddingEnd="10dp">
 
-                <TextView
-                    android:id="@+id/roomTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="end"
-                    android:text="room no"
-                    android:textSize="11sp" />
+
 
                 <TextView
                     android:id="@+id/dateTimeTextView"
@@ -84,8 +78,16 @@
                     android:layout_marginBottom="4dp"
                     android:gravity="end"
                     android:text="DateTime"
-                    android:textColor="@android:color/darker_gray"
                     android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/roomTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="room no"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="11sp" />
 
             </LinearLayout>
         </LinearLayout>

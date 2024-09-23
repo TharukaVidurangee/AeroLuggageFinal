@@ -153,15 +153,30 @@ class TagAdapter(
             }
         }
 
-        // Handle deleteButton click event
+        // Inside onBindViewHolder
         holder.deleteButton.setOnClickListener {
             if (holder.hiddenButtons.visibility == View.VISIBLE) {
                 db.deleteTag(tag.id)
-                refreshData(db.getUnsyncedTags(tag.room)) // Fetch sorted unsynced tags after deletion
+
+                // Fetch today's tags after deletion
+                val todayTags = db.getTagsForToday(tag.room) // Pass the current room
+                refreshData(todayTags) // Refresh the adapter with today's tags
+
                 Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
                 swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
             }
         }
+
+
+//        // Handle deleteButton click event
+//        holder.deleteButton.setOnClickListener {
+//            if (holder.hiddenButtons.visibility == View.VISIBLE) {
+//                db.deleteTag(tag.id)
+//                refreshData(db.getUnsyncedTags(tag.room)) // Fetch sorted unsynced tags after deletion
+//                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
+//                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
+//            }
+//        }
     }
 
     private fun resetCardPosition(holder: TagViewHolder) {
@@ -177,7 +192,7 @@ class TagAdapter(
 
     // Refresh the data in the adapter
     fun refreshData(newTags: List<Tag>) {
-        tags = newTags.sortedBy { it.room }
+        tags = newTags.sortedByDescending { it.dateTime }
         notifyDataSetChanged()
         swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after data refresh
     }
