@@ -45,9 +45,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         }
     }
 
-    fun insertTag(context: Context, tag: Tag) {
-        // Open the database, but do not close it immediately
-
+    fun insertTag(context: Context, tag: Tag, onTagInserted: () -> Unit) {
         // Check if the tag already exists
         val existingTagCursor = readableDatabase.query(
             TABLE_NAME, null, "$COLUMN_TAG = ?", arrayOf(tag.bagtag),
@@ -76,6 +74,9 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                         }
                         db.insert(TABLE_NAME, null, values)
                         db.setTransactionSuccessful()
+
+                        //call the callback function to refresh the recyclerView
+                        onTagInserted()
                     } finally {
                         db.endTransaction()
                     }
@@ -104,14 +105,15 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
                 }
                 db.insert(TABLE_NAME, null, values)
                 db.setTransactionSuccessful()
+
+                // Call the callback to refresh the RecyclerView
+                onTagInserted()
             } finally {
                 db.endTransaction()
                 existingTagCursor.close()
             }
         }
     }
-
-
 
     // Get all unsynced tags
     fun getUnsyncedTags(room: String): List<Tag> {
@@ -140,34 +142,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
         return tagsList
     }
-
-//    // Get all tags for a specific room
-//    fun getTagsByRoom(room: String): List<Tag> {
-//        val tagsList = mutableListOf<Tag>()
-//        val db = this.readableDatabase
-//        val cursor = db.query(
-//            TABLE_NAME, null,
-//            "$COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
-//            arrayOf(room, "0"),
-//            null, null, null
-//        )
-//
-//        useCursor(cursor) {
-//            while (cursor.moveToNext()) {
-//                val tag = Tag(
-//                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
-//                    bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG)),
-//                    room = room,
-//                    dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
-//                    userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
-//                )
-//                tagsList.add(tag)
-//            }
-//        }
-//
-//        db.close()
-//        return tagsList
-//    }
 
     // Fetch all tags for a given room
     fun getTagsByRoom(roomId: String): List<Tag> {

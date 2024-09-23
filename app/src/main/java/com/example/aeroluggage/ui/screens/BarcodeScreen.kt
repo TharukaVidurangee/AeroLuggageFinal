@@ -2,6 +2,7 @@ package com.example.aeroluggage.ui.screens
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -131,7 +133,9 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             if (roomId.isNotEmpty() && bagTag.isNotEmpty()) {
                 val dateTime = getCurrentDateTime()
                 val tag = Tag(0, bagTag, roomId, dateTime, userID = staffId ?: "")
-                db.insertTag(this, tag)
+                db.insertTag(this, tag){
+                    loadTagsForRoom(roomId)
+                }
                 loadTagsForRoom(roomId)
                 binding.tagEditText.text.clear()
 
@@ -147,12 +151,18 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
                 Log.d("BarcodeScreen", "Selected CheckId: $roomId")
 
+                //refreshTagsForRoom(roomId = toString())
+
                 // Hide the keyboard after saving
                 hideKeyboard()
             } else {
                 Toast.makeText(this, "Re-enter the room number & Tag", Toast.LENGTH_SHORT).show()
             }
 
+            //loadTagsForRoom(roomId)
+            //refreshTagsForRoom(roomId)
+            //tagAdapter.refreshData()
+//            refreshData
         }
 
         // Handle Change Room Button Click
@@ -222,7 +232,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
     private fun loadTagsForRoom(roomId: String) {
         val tags = db.getTagsByRoom(roomId)
         val todayTags = filterTagsByDate(tags)
-        val sortedTags = tags.sortedByDescending { it.dateTime }
+        val sortedTags = todayTags.sortedByDescending { it.dateTime }
         tagAdapter.refreshData(sortedTags)
     }
 
@@ -274,38 +284,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             hideKeyboard()
         }
     }
-
-//    private fun getCurrentDateTime(): String {
-//        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-//        return dateFormat.format(Date())
-//    }
-//
-//    // Method to get the current date in "yyyy-MM-dd" format
-//    private fun getCurrentDate(): String {
-//        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-//        return dateFormat.format(Date())
-//    }
-//
-//    // Method to filter tags by today's date
-//    private fun filterTagsByDate(tags: List<Tag>): List<Tag> {
-//        val currentDate = getCurrentDate()
-//        Log.d("BarcodeScreen", "Filtering tags for date: $currentDate")
-//        val filteredTags = tags.filter { tag ->
-//            Log.d("BarcodeScreen", "Checking tag date: ${tag.dateTime}")
-//            tag.dateTime.startsWith(currentDate)
-//        }
-//        Log.d("BarcodeScreen", "Filtered tags count: ${filteredTags.size}")
-//        return filteredTags
-//
-//    }
-//
-//    // Method to refresh the tags for a specific room
-//    private fun refreshTagsForRoom(room: String) {
-//        val tags = db.getTagsByRoom(room)
-//        val todayTags = filterTagsByDate(tags)
-//        val sortedTags = todayTags.sortedByDescending { it.dateTime }  // Sort tags by dateTime in descending order
-//        tagAdapter.refreshData(sortedTags)
-//    }
 
     private fun refreshTagsForRoom(roomId: String) {
         val tags = db.getTagsByRoom(roomId)
@@ -361,7 +339,15 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START)
         }else{
-            onBackPressedDispatcher.onBackPressed()
+             onBackPressedDispatcher.onBackPressed()
+//            if(!isExiting){
+//            showExitConfirmationDialog()
+            }
         }
     }
-}
+
+
+
+
+
+
