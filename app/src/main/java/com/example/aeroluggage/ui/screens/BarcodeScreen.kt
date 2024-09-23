@@ -378,6 +378,46 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         shouldShowExitDialog = false
     }
 
+//    private var isDialogShowing = false
+//
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            drawerLayout.closeDrawer(GravityCompat.START)
+//        } else {
+//            showExitConfirmationDialog()
+//        }
+//    }
+//
+//    private fun showExitConfirmationDialog() {
+//        if (isFinishing || isDialogShowing) return
+//
+//        isDialogShowing = true
+//        val builder = AlertDialog.Builder(this)
+//        builder.setTitle("Exit Confirmation")
+//            .setMessage("Do you really want to exit the app?")
+//            .setPositiveButton("Yes") { dialog, _ ->
+//                val intent = Intent(this, LoginScreen::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//                finish()
+//            }
+//            .setNegativeButton("No") { dialog, _ ->
+//                dialog.dismiss()
+//            }
+//            .setOnDismissListener {
+//                isDialogShowing = false
+//            }
+//
+//        builder.show()
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        isDialogShowing = false // Reset the flag
+//    }
+
+
 }
 
 
