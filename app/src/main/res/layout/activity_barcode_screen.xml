@@ -76,6 +76,38 @@
                         app:layout_constraintEnd_toStartOf="@id/changeRoomButton"
                         app:layout_constraintStart_toStartOf="parent" />
 
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toEndOf="@id/roomEditText"-->
+<!--                        android:visibility="gone"-->
+<!--                        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:src="@drawable/baseline_close_24"/>-->
+
+<!--                        <Button-->
+<!--                            android:id="@+id/changeRoomButton"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginEnd="16dp"-->
+<!--                            android:backgroundTint="@color/transparent"-->
+<!--                            android:text="Change Room"-->
+<!--                            android:textColor="@color/greywhite"-->
+<!--                            android:textSize="14sp"-->
+<!--                            app:cornerRadius="12dp"/>-->
+<!--&lt;!&ndash;                            android:visibility="gone"&ndash;&gt;-->
+<!--&lt;!&ndash;                            app:layout_constraintBottom_toBottomOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            app:layout_constraintEnd_toEndOf="parent"&ndash;&gt;-->
+<!--&lt;!&ndash;                            app:layout_constraintStart_toEndOf="@id/roomEditText"&ndash;&gt;-->
+<!--&lt;!&ndash;                            app:layout_constraintTop_toTopOf="parent" />&ndash;&gt;-->
+
+<!--                    </RelativeLayout>-->
+
                     <Button
                         android:id="@+id/changeRoomButton"
                         android:layout_width="wrap_content"

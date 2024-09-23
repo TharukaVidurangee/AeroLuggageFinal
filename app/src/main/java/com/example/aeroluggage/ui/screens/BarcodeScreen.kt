@@ -275,36 +275,55 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    private fun getCurrentDateTime(): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        return dateFormat.format(Date())
-    }
+//    private fun getCurrentDateTime(): String {
+//        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+//        return dateFormat.format(Date())
+//    }
+//
+//    // Method to get the current date in "yyyy-MM-dd" format
+//    private fun getCurrentDate(): String {
+//        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+//        return dateFormat.format(Date())
+//    }
+//
+//    // Method to filter tags by today's date
+//    private fun filterTagsByDate(tags: List<Tag>): List<Tag> {
+//        val currentDate = getCurrentDate()
+//        Log.d("BarcodeScreen", "Filtering tags for date: $currentDate")
+//        val filteredTags = tags.filter { tag ->
+//            Log.d("BarcodeScreen", "Checking tag date: ${tag.dateTime}")
+//            tag.dateTime.startsWith(currentDate)
+//        }
+//        Log.d("BarcodeScreen", "Filtered tags count: ${filteredTags.size}")
+//        return filteredTags
+//
+//    }
+//
+//    // Method to refresh the tags for a specific room
+//    private fun refreshTagsForRoom(room: String) {
+//        val tags = db.getTagsByRoom(room)
+//        val todayTags = filterTagsByDate(tags)
+//        val sortedTags = todayTags.sortedByDescending { it.dateTime }  // Sort tags by dateTime in descending order
+//        tagAdapter.refreshData(sortedTags)
+//    }
 
-    // Method to get the current date in "yyyy-MM-dd" format
-    private fun getCurrentDate(): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return dateFormat.format(Date())
-    }
-
-    // Method to filter tags by today's date
-    private fun filterTagsByDate(tags: List<Tag>): List<Tag> {
-        val currentDate = getCurrentDate()
-        Log.d("BarcodeScreen", "Filtering tags for date: $currentDate")
-        val filteredTags = tags.filter { tag ->
-            Log.d("BarcodeScreen", "Checking tag date: ${tag.dateTime}")
-            tag.dateTime.startsWith(currentDate)
-        }
-        Log.d("BarcodeScreen", "Filtered tags count: ${filteredTags.size}")
-        return filteredTags
-
-    }
-
-    // Method to refresh the tags for a specific room
-    private fun refreshTagsForRoom(room: String) {
-        val tags = db.getTagsByRoom(room)
-        val todayTags = filterTagsByDate(tags)
-        val sortedTags = todayTags.sortedByDescending { it.dateTime }  // Sort tags by dateTime in descending order
+    private fun refreshTagsForRoom(roomId: String) {
+        val tags = db.getTagsByRoom(roomId)
+        val todayTags = filterTagsByDate(tags)  // Filter by today's date
+        val sortedTags = todayTags.sortedByDescending { it.dateTime }
         tagAdapter.refreshData(sortedTags)
+    }
+
+    // Filters tags to include only those added today
+    private fun filterTagsByDate(tags: List<Tag>): List<Tag> {
+        val today = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        return tags.filter { it.dateTime.startsWith(today) }
+    }
+
+    // Get the current date and time in the required format
+    private fun getCurrentDateTime(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+        return sdf.format(Date())
     }
 
     private fun getUnsafeOkHttpClient(): OkHttpClient {

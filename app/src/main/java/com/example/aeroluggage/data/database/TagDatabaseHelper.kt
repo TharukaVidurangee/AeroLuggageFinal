@@ -141,31 +141,53 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         return tagsList
     }
 
-    // Get all tags for a specific room
-    fun getTagsByRoom(room: String): List<Tag> {
+//    // Get all tags for a specific room
+//    fun getTagsByRoom(room: String): List<Tag> {
+//        val tagsList = mutableListOf<Tag>()
+//        val db = this.readableDatabase
+//        val cursor = db.query(
+//            TABLE_NAME, null,
+//            "$COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
+//            arrayOf(room, "0"),
+//            null, null, null
+//        )
+//
+//        useCursor(cursor) {
+//            while (cursor.moveToNext()) {
+//                val tag = Tag(
+//                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+//                    bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG)),
+//                    room = room,
+//                    dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
+//                    userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+//                )
+//                tagsList.add(tag)
+//            }
+//        }
+//
+//        db.close()
+//        return tagsList
+//    }
+
+    // Fetch all tags for a given room
+    fun getTagsByRoom(roomId: String): List<Tag> {
+        val db = this.readableDatabase
         val tagsList = mutableListOf<Tag>()
-        val db = readableDatabase
-        val cursor = db.query(
-            TABLE_NAME, null,
-            "$COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
-            arrayOf(room, "0"),
-            null, null, null
-        )
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ROOM = ?", arrayOf(roomId))
 
-        useCursor(cursor) {
-            while (cursor.moveToNext()) {
-                val tag = Tag(
-                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
-                    bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG)),
-                    room = room,
-                    dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME)),
-                    userID = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
-                )
+        if (cursor.moveToFirst()) {
+            do {
+                val id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID))
+                val bagtag = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TAG))
+                val room = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ROOM))
+                val dateTime = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DATE_TIME))
+                val userId = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_ID))
+
+                val tag = Tag(id, bagtag, room, dateTime, userId)
                 tagsList.add(tag)
-            }
+            } while (cursor.moveToNext())
         }
-
-        db.close()
+        cursor.close()
         return tagsList
     }
 
