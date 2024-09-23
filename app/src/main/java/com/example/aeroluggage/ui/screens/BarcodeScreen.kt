@@ -333,21 +333,66 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    private var shouldShowExitDialog = false
+//    private var shouldShowExitDialog = false
+
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+//            drawerLayout.closeDrawer(GravityCompat.START)
+//        } else {
+//            // Set the flag to show the exit dialog
+////            shouldShowExitDialog = true
+////            showExitConfirmationDialog()
+//        }
+//    }
+
+//    private fun showExitConfirmationDialog() {
+//        if (!isFinishing) {
+//            val builder = AlertDialog.Builder(this)
+//            builder.setTitle("Exit Confirmation")
+//                .setMessage("Do you really want to exit the app?")
+//                .setPositiveButton("Yes") { dialog, _ ->
+//                    // User chose to exit, log out and finish activity
+//                    val intent = Intent(this, LoginScreen::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
+//                    finish()
+//                }
+//                .setNegativeButton("No") { dialog, _ ->
+//                    // User chose not to exit, dismiss the dialog
+//                    dialog.dismiss()
+//                }
+//                .setOnDismissListener {
+//                    // Reset the flag when the dialog is dismissed
+//                    shouldShowExitDialog = false
+//                }
+//
+//            // Show the dialog
+//            builder.show()
+//        }
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        // Reset the flag
+//        shouldShowExitDialog = false
+//    }
+
+    private var isExitDialogShowing = false
 
     override fun onBackPressed() {
-        super.onBackPressed()
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            // Set the flag to show the exit dialog
-            shouldShowExitDialog = true
+        } else if (!isExitDialogShowing) {
             showExitConfirmationDialog()
+        } else {
+            super.onBackPressed() // This will finish the activity if dialog is not shown
         }
     }
 
     private fun showExitConfirmationDialog() {
         if (!isFinishing) {
+            isExitDialogShowing = true // Set the flag to true
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Exit Confirmation")
                 .setMessage("Do you really want to exit the app?")
@@ -359,12 +404,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                     finish()
                 }
                 .setNegativeButton("No") { dialog, _ ->
-                    // User chose not to exit, dismiss the dialog
                     dialog.dismiss()
+                    isExitDialogShowing = false // Reset the flag
                 }
                 .setOnDismissListener {
-                    // Reset the flag when the dialog is dismissed
-                    shouldShowExitDialog = false
+                    isExitDialogShowing = false // Reset the flag when the dialog is dismissed
                 }
 
             // Show the dialog
@@ -372,11 +416,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        // Reset the flag
-        shouldShowExitDialog = false
-    }
 
 }
 
