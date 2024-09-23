@@ -6,25 +6,25 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/screen"
+    android:background="@drawable/background_photo"
     tools:context=".ui.screens.BarcodeScreen">
 
-    <!-- Navigation View for Drawer -->
     <LinearLayout
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/toolbar2"
         android:orientation="vertical">
 
         <!-- Toolbar for Navigation Drawer -->
-        <include layout="@layout/toolbar" />
-
-        <!-- Fragment container -->
         <FrameLayout
             android:id="@+id/fragment_container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
+        <include layout="@layout/toolbar" />
+
+        <!-- Fragment container -->
 
         <!-- Main content layout -->
         <RelativeLayout
@@ -81,9 +81,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:textColor="@color/greywhite"
                         android:backgroundTint="@color/transparent"
                         android:text="Change Room"
+                        android:textColor="@color/greywhite"
                         android:textSize="14sp"
                         android:visibility="gone"
                         app:cornerRadius="12dp"
@@ -108,14 +108,15 @@
 
                 <Button
                     android:id="@+id/saveButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="92dp"
                     android:layout_height="55dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="2dp"
                     android:backgroundTint="@color/orange"
                     android:text="Save"
                     android:textSize="20sp"
-                    app:cornerRadius="12dp"
+                    app:cornerRadius="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.578"
                     app:layout_constraintStart_toEndOf="@+id/imageView14"
                     app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
                     tools:ignore="MissingConstraints" />
@@ -124,8 +125,7 @@
                     android:id="@+id/tagEditText"
                     android:layout_width="196dp"
                     android:layout_height="38dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="13dp"
                     android:background="@null"
                     android:hint="Enter Bag Tag"
                     android:textColor="@color/white"
@@ -133,7 +133,7 @@
                     android:textSize="20dp"
                     app:layout_constraintBottom_toTopOf="@+id/textView"
                     app:layout_constraintEnd_toEndOf="@+id/imageView14"
-                    app:layout_constraintHorizontal_bias="0.148"
+                    app:layout_constraintHorizontal_bias="0.16"
                     app:layout_constraintStart_toStartOf="@+id/imageView14"
                     app:srcCompat="@drawable/white_input"
                     tools:ignore="UnknownIdInLayout" />
@@ -145,9 +145,9 @@
                     android:background="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/tagRecyclerView"
                     app:layout_constraintTop_toBottomOf="@+id/textView"
+                    tools:ignore="MissingConstraints"
                     tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="137dp"
-                    tools:ignore="MissingConstraints" />
+                    tools:layout_editor_absoluteY="137dp" />
 
                 <TextView
                     android:id="@+id/textView"
@@ -178,16 +178,15 @@
                     android:id="@+id/syncAllButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="84dp"
+                    android:layout_marginBottom="78dp"
                     android:backgroundTint="@color/orange"
                     android:text="Sync All"
                     android:textSize="20sp"
-                    app:cornerRadius="12dp"
+                    app:cornerRadius="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:ignore="MissingConstraints" />
-
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

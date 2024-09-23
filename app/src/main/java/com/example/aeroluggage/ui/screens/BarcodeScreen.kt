@@ -165,6 +165,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             //making the border visible when the room is changed
             binding.imageView18.visibility = View.VISIBLE
 
+            //making textView, syncAllButton, and view01 invisible again
+            binding.textView.visibility = View.INVISIBLE
+            binding.syncAllButton.visibility = View.INVISIBLE
+            binding.view01.visibility = View.INVISIBLE
+
         }
 
         // Fetch room data
