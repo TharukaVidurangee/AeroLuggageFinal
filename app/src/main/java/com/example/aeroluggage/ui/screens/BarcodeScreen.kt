@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -151,18 +153,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
                 Log.d("BarcodeScreen", "Selected CheckId: $roomId")
 
-                //refreshTagsForRoom(roomId = toString())
-
                 // Hide the keyboard after saving
                 hideKeyboard()
             } else {
                 Toast.makeText(this, "Re-enter the room number & Tag", Toast.LENGTH_SHORT).show()
             }
-
-            //loadTagsForRoom(roomId)
-            //refreshTagsForRoom(roomId)
-            //tagAdapter.refreshData()
-//            refreshData
         }
 
         // Handle Change Room Button Click
@@ -341,6 +336,21 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         } catch (e: Exception) {
             throw RuntimeException(e)
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_DOWN) {
+            val view = currentFocus
+            if (view != null) {
+                val outRect = Rect()
+                view.getGlobalVisibleRect(outRect)
+                if (!outRect.contains(ev.rawX.toInt(), ev.rawY.toInt())) {
+                    hideKeyboard()
+                    view.clearFocus()
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 
     // Function to hide the keyboard
