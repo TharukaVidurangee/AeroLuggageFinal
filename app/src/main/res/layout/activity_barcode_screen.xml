@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/toolbar2"
-                android:paddingTop="00dp"
+                android:paddingTop="0dp"
                 tools:ignore="NotSibling">
 
                 <!-- Updated Layout for Room and Change Room Button -->
@@ -199,6 +199,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="@drawable/drawer_background"
         app:menu="@menu/side_drawer"
         app:headerLayout="@layout/header" />
 

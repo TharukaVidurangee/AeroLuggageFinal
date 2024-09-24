@@ -1,16 +1,13 @@
-<!--<resources xmlns:tools="http://schemas.android.com/tools">-->
-<!--    &lt;!&ndash; Base application theme. &ndash;&gt;-->
-<!--    <style name="Base.Theme.AeroLuggage" parent="Theme.Material3.DayNight.NoActionBar">-->
-<!--        <item name="android:statusBarColor">@color/black</item>-->
-<!--        &lt;!&ndash; Customize your dark theme here. &ndash;&gt;-->
-<!--        &lt;!&ndash; <item name="colorPrimary">@color/my_dark_primary</item> &ndash;&gt;-->
-<!--    </style>-->
-<!--</resources>-->
-
-    <!-- res/values/themes.xml -->
 <resources xmlns:tools="http://schemas.android.com/tools">
 <!-- Base application theme. -->
+
+    <style name="MenuTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">#FFFFFF</item> <!-- White color -->
+    </style>
+
 <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+
+
     <!-- Primary and secondary colors -->
     <item name="colorPrimary">@color/orange</item>
     <item name="colorPrimaryVariant">@color/orange</item>

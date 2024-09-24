@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <group
+        android:itemTextAppearance="@style/MenuTextStyle"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_history"
@@ -31,4 +32,6 @@
             </menu>
         </item>
     </group>
+
+
 </menu>
