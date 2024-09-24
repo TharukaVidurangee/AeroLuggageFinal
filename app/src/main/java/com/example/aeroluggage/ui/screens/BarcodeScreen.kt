@@ -376,10 +376,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 .setMessage("Do you really want to exit the app?")
                 .setPositiveButton("Yes") { dialog, _ ->
                     // User chose to exit, log out and finish activity
-                    val intent = Intent(this, LoginScreen::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                    finish()
+//                    val intent = Intent(this, LoginScreen::class.java)
+//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                    startActivity(intent)
+//                    finish()
+                    finishAffinity()
                 }
                 .setNegativeButton("No") { dialog, _ ->
                     dialog.dismiss()
