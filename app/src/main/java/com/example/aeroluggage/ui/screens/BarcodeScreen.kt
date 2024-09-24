@@ -170,7 +170,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             val newRoom = binding.roomEditText.text.toString()
             unfreezeRoomNumber()
             refreshTagsForRoom(newRoom)  // Refresh the RecyclerView for the new room with today's tags
-            Toast.makeText(this, "Room Changed", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Re-enter the Room Number", Toast.LENGTH_SHORT).show()
 
             //making the border visible when the room is changed
             binding.imageView18.visibility = View.VISIBLE
@@ -196,12 +196,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             R.id.nav_settings -> replaceFragment(SettingsFragment())
             R.id.logout -> {
                 logoutDialog()
-
-
-//                val intent = Intent(this, LoginScreen::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-//                finish()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

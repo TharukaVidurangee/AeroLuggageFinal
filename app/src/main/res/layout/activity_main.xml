@@ -27,7 +27,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/app_logo"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="59dp" />
+        tools:layout_editor_absoluteY="76dp" />
 
     <ImageView
         android:id="@+id/imageView12"

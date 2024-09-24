@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <group
-        android:itemTextAppearance="@style/MenuTextStyle"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_history"
@@ -19,19 +18,10 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/sd_settings"
             android:title="@string/settings" />
-    </group>
-
-    <group>
         <item
-            android:title="">
-            <menu>
-                <item
-                    android:id="@+id/logout"
-                    android:icon="@drawable/sd_logout_temp"
-                    android:title="@string/logout" />
-            </menu>
-        </item>
+            android:id="@+id/logout"
+            android:icon="@drawable/sd_logout_temp"
+            android:title="@string/logout" />
     </group>
-
 
 </menu>
