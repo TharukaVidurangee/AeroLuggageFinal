@@ -17,7 +17,6 @@ class RoomAdapter : ListAdapter<Room, RoomAdapter.RoomViewHolder>(RoomDiffCallba
 
     // onCreateViewHolder is called when RecyclerView needs a new ViewHolder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder {
-        // Inflate the room_item.xml layout and create a RoomViewHolder with it
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.room_item, parent, false)
         return RoomViewHolder(view)
@@ -48,15 +47,6 @@ class RoomAdapter : ListAdapter<Room, RoomAdapter.RoomViewHolder>(RoomDiffCallba
                 }
                 context.startActivity(intent)
             }
-
-            // Set click listener for the room item
-//            itemView.setOnClickListener {
-//                // On click, start TagListActivity and pass the room number as an extra
-//                val intent = Intent(itemView.context, TagListActivity::class.java).apply {
-//                    putExtra("ROOM_NUMBER", room.roomNumber)
-//                }
-//                itemView.context.startActivity(intent)
-//            }
         }
     }
 }

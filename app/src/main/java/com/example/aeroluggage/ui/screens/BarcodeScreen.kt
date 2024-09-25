@@ -118,6 +118,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         binding.tagRecyclerView.adapter = tagAdapter
 
         // Hide textView, syncAllButton, and view01 initially
+        binding.count.visibility = View.GONE
         binding.textView.visibility = View.GONE
         binding.syncAllButton.visibility = View.GONE
         binding.view01.visibility = View.GONE
@@ -137,6 +138,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 val tag = Tag(0, bagTag, roomId, dateTime, userID = staffId ?: "")
                 db.insertTag(this, tag){
                     loadTagsForRoom(roomId)
+                    //updateTagCount(db.getTagsByRoom(roomId).size) // Update count after saving
                 }
                 loadTagsForRoom(roomId)
                 binding.tagEditText.text.clear()
@@ -149,9 +151,11 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
                 binding.textView.visibility = View.VISIBLE
                 binding.syncAllButton.visibility = View.VISIBLE
                 binding.view01.visibility = View.VISIBLE
+                binding.count.visibility = View.VISIBLE
 
                 Toast.makeText(this, "Bag Tag saved", Toast.LENGTH_SHORT).show()
                 Log.d("BarcodeScreen", "Selected CheckId: $roomId")
+
 
                 // Hide the keyboard after saving
                 hideKeyboard()
@@ -174,6 +178,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             binding.textView.visibility = View.INVISIBLE
             binding.syncAllButton.visibility = View.INVISIBLE
             binding.view01.visibility = View.INVISIBLE
+            binding.count.visibility = View.INVISIBLE
 
         }
 
@@ -197,6 +202,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return true
     }
 
+    //for logout dialog
     private fun logoutDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Logout")
@@ -246,6 +252,7 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         val todayTags = filterTagsByDate(tags)
         val sortedTags = todayTags.sortedByDescending { it.dateTime }
         tagAdapter.refreshData(sortedTags)
+        //updateTagCount(sortedTags.size) // Set the initial count
     }
 
     private fun fetchRoomData() {
@@ -379,11 +386,6 @@ class BarcodeScreen : AppCompatActivity(), NavigationView.OnNavigationItemSelect
             builder.setTitle("Exit Confirmation")
                 .setMessage("Do you really want to exit the app?")
                 .setPositiveButton("Yes") { dialog, _ ->
-                    // User chose to exit, log out and finish activity
-//                    val intent = Intent(this, LoginScreen::class.java)
-//                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                    startActivity(intent)
-//                    finish()
                     finishAffinity()
                 }
                 .setNegativeButton("No") { dialog, _ ->

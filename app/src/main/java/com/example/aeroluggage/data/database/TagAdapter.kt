@@ -1,7 +1,6 @@
 package com.example.aeroluggage
 
 import android.content.Context
-import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -18,13 +17,6 @@ import com.example.aeroluggage.data.models.Tag
 import com.example.aeroluggage.domain.storage.StorageRoom
 import com.example.aeroluggage.sync.SyncCallback
 import com.example.aeroluggage.sync.SyncManager
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 // Adapter class for displaying tags in a RecyclerView
 class TagAdapter(
@@ -153,30 +145,39 @@ class TagAdapter(
             }
         }
 
-        // Inside onBindViewHolder
-        holder.deleteButton.setOnClickListener {
-            if (holder.hiddenButtons.visibility == View.VISIBLE) {
-                db.deleteTag(tag.id)
-
-                // Fetch today's tags after deletion
-                val todayTags = db.getTagsForToday(tag.room) // Pass the current room
-                refreshData(todayTags) // Refresh the adapter with today's tags
-
-                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
-                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
-            }
-        }
-
-
-//        // Handle deleteButton click event
+//        // Inside onBindViewHolder
 //        holder.deleteButton.setOnClickListener {
 //            if (holder.hiddenButtons.visibility == View.VISIBLE) {
 //                db.deleteTag(tag.id)
+//
+////                // Fetch today's tags after deletion
+////                val todayTags = db.getTagsForToday(tag.room) // Pass the current room
+////                refreshData(todayTags) // Refresh the adapter with today's tags
 //                refreshData(db.getUnsyncedTags(tag.room)) // Fetch sorted unsynced tags after deletion
+//
 //                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
 //                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
 //            }
 //        }
+
+        // Handle deleteButton click event
+        holder.deleteButton.setOnClickListener {
+            if (holder.hiddenButtons.visibility == View.VISIBLE) {
+                db.deleteTag(tag.id)
+                removeTagAtPosition(holder.adapterPosition)
+                //refreshData(db.getUnsyncedTags(tag.room, tag.dateTime)) // Fetch sorted unsynced tags after deletion
+                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
+                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
+            }
+        }
+    }
+
+    private fun removeTagAtPosition(position: Int) {
+        val updatedTags = tags.toMutableList() // Create a mutable copy of the tags list
+        updatedTags.removeAt(position)  // Remove the tag at the given position
+        tags = updatedTags  // Update the adapter's data
+        notifyItemRemoved(position)  // Notify that the item was removed
+        notifyItemRangeChanged(position, updatedTags.size)  // Optional: update the range of items for better animation
     }
 
     private fun resetCardPosition(holder: TagViewHolder) {
@@ -230,7 +231,7 @@ class TagAdapter(
         }
 
         // After syncing all tags, refresh the data to show only unsynced tags
-        refreshData(db.getUnsyncedTags(room = toString()))
+        refreshData(db.getUnsyncedTags(room = toString(), dateTime = toString()))
     }
 
     private fun removeTagFromList(tag: Tag) {

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper
 import androidx.appcompat.app.AlertDialog
 import com.example.aeroluggage.data.models.SyncData
 import com.example.aeroluggage.data.models.Tag
-import com.example.aeroluggage.ui.screens.BarcodeScreen
 import com.google.gson.Gson
 
 class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -116,13 +115,14 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     }
 
     // Get all unsynced tags
-    fun getUnsyncedTags(room: String): List<Tag> {
+    fun getUnsyncedTags(room: String, dateTime: String): List<Tag> {
         val tagsList = mutableListOf<Tag>()
         val db = readableDatabase
         val cursor = db.query(
             TABLE_NAME, null,
-            "$COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?",
-            arrayOf(room, "0"),
+            "$COLUMN_ROOM = ? AND $COLUMN_DATE_TIME = ? AND $COLUMN_ISSYNC = ?",
+//            arrayOf(arrayOf(room, dateTime, "0").toString()),
+            arrayOf(room, dateTime, "0"),
             null, null, null
         )
 
@@ -147,7 +147,7 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
     fun getTagsByRoom(roomId: String): List<Tag> {
         val db = this.readableDatabase
         val tagsList = mutableListOf<Tag>()
-        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ROOM = ?", arrayOf(roomId))
+        val cursor = db.rawQuery("SELECT * FROM $TABLE_NAME WHERE $COLUMN_ROOM = ? AND $COLUMN_ISSYNC = ?", arrayOf(roomId, "0"))
 
         if (cursor.moveToFirst()) {
             do {
@@ -238,7 +238,6 @@ class TagDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_N
         db.close()
         return tagsList
     }
-
 
     // Convert a list of SyncData to JSON
     fun convertToJSON(syncDataList: List<SyncData>): String {
