@@ -145,21 +145,6 @@ class TagAdapter(
             }
         }
 
-//        // Inside onBindViewHolder
-//        holder.deleteButton.setOnClickListener {
-//            if (holder.hiddenButtons.visibility == View.VISIBLE) {
-//                db.deleteTag(tag.id)
-//
-////                // Fetch today's tags after deletion
-////                val todayTags = db.getTagsForToday(tag.room) // Pass the current room
-////                refreshData(todayTags) // Refresh the adapter with today's tags
-//                refreshData(db.getUnsyncedTags(tag.room)) // Fetch sorted unsynced tags after deletion
-//
-//                Toast.makeText(holder.itemView.context, "Tag deleted", Toast.LENGTH_SHORT).show()
-//                swipedPosition = RecyclerView.NO_POSITION // Reset swiped position after deletion
-//            }
-//        }
-
         // Handle deleteButton click event
         holder.deleteButton.setOnClickListener {
             if (holder.hiddenButtons.visibility == View.VISIBLE) {
@@ -214,7 +199,7 @@ class TagAdapter(
             override fun onSyncSuccess() {
                 Toast.makeText(context, "Tag synced", Toast.LENGTH_SHORT).show()
                 db.markAsSynced(tag.id.toString()) // Mark the tag as synced in the database
-                removeTagFromList(tag) // Remove the synced tag from the list and refre
+                removeTagFromList(tag) // Remove the synced tag from the list
             }
 
             override fun onSyncFailure() {
